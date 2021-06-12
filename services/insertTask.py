@@ -5,13 +5,10 @@ import csv
 
 
 
-def insertTask(taskID, taskName):
+def insert_task(taskID, taskName):
 
     fields=[taskID,taskName]
 
     with open(r'C:\bench\user-tester-manager\database\tasks.csv', 'a') as f:
         writer = csv.writer(f)
         writer.writerow(fields)
-
-
-insertTask(1,"test")

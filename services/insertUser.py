@@ -2,7 +2,7 @@ import csv
 
 
 # Takes in list with following values - first_name,last_name,email_address,phone_number,task_id
-def insert_task(firstname, lastName, emailAddress, phoneNumber, taskID):
+def insert_user(firstname, lastName, emailAddress, phoneNumber, taskID):
 
     fields=[firstname, lastName, emailAddress, phoneNumber, taskID]
 

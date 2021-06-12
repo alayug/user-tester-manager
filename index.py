@@ -1,26 +1,40 @@
 #!/usr/bin/python
-import tkinter as tk
-from services.insertTask import insert_task
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.create_widgets()
+from tkinter import *
+from services.insertUser import insert_user
+root = Tk()
 
-    def create_widgets(self):
-        self.insert_task_section = tk.Button(self)
-        self.insert_task_section["text"] = "Insert Task"
-        self.insert_task_section["command"] = self.insert_task
-        self.insert_task_section.pack(side="top")
+# Create the size of the widget
+root.geometry('500x500')
 
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=self.master.destroy)
-        self.quit.pack(side="bottom")
+# Create all variables required for users.csv
+firstName = StringVar()
+lastName = StringVar()
+emailAddress = StringVar()
+phoneNumber = StringVar()
+taskID = IntVar()
 
-    def insert_task(self):
-        insert_task(1,"New Task")
+# Create all labels required for users.csv, using grid for organization
+firstNameLabel = Label(root, text = "First Name").grid(row = 0,column = 0)
+lastNameLabel = Label(root, text = "Last Name").grid(row = 1,column = 0)
+emailAddressLabel = Label(root, text = "Email Address").grid(row = 2,column = 0)
+phoneNumberLabel = Label(root, text = "Phone Number").grid(row = 3,column = 0)
+taskIDLabel = Label(root, text = "Task ID").grid(row = 4,column = 0)
 
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
+# Create all entries required for users.csv
+firstNameEntry = Entry(root, textvariable = firstName).grid(row = 0,column = 1)
+lastNameEntry = Entry(root, textvariable = lastName).grid(row = 1,column = 1)
+emailAddressEntry = Entry(root, textvariable = emailAddress).grid(row = 2,column = 1)
+phoneNumberEntry = Entry(root, textvariable = phoneNumber).grid(row = 3,column = 1)
+taskIDEntry = Entry(root, textvariable = taskID).grid(row = 4,column = 1)
+
+
+def insertUser():
+    # execute insert_user function. Retrieving the entry data by invoking get() on the variables
+   insert_user(firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskID.get())
+
+# button to trigger function to insert user data
+btn = Button(root ,text="Submit", command=insertUser).grid(row=5,column=0)
+
+
+#this will run the mainloop.
+root.mainloop()

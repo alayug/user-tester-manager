@@ -1,6 +1,5 @@
 import csv
 
-# Takes in task name
 def get_user_details():
     # Create list to store the csv data
     userDetailsList = []

@@ -1,11 +1,10 @@
 #!/usr/bin/python
-from services.insertTask import insert_task
 from tkinter import *
 import tkinter.ttk 
 from services.insertUser import insert_user
+from services.insertTask import insert_task
+
 root = Tk()
-
-
 
 # Create the size of the widget
 root.geometry('500x500')
@@ -20,8 +19,6 @@ taskId = IntVar()
 # Create all variables required for tasks.csv
 id = IntVar()
 taskName = StringVar()
-
-
 
 def insertUser():
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables

@@ -25,8 +25,9 @@ def insertUser():
    insert_user(firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get())
 
 def insertTask():
+    newTaskList = [id.get(), taskName.get()]
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
-   insert_task(id.get(), taskName.get())
+    insert_task([newTaskList])
 
 ###### USER UI #######
 # Create all labels required for users.csv, using grid for organization

@@ -4,7 +4,7 @@ def get_task_details():
     # Create list to store the csv data
     taskList = []
 
-    # opens csv file
+    # opens csv file, using 'r' for read
     with open(r'C:\bench\user-tester-manager\database\tasks.csv', 'r') as f:
         # csv reader will each line of data in the csv file
         reader = csv.reader(f)

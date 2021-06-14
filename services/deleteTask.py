@@ -8,7 +8,7 @@ def delete_task(taskId):
     newTaskList = []
 
     for task in currentTaskList:
-        # if the row in tasks.csv does not match the taskId parameter, add to newTaskList
+        # if the row (task[0] = taskId) in tasks.csv does not match the taskId parameter, add to newTaskList
         if int(task[0]) != taskId:
             newTaskList.append(task)
     

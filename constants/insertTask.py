@@ -1,0 +1,2 @@
+append = 'a'
+write = 'w'

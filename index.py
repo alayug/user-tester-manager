@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from tkinter import *
 import tkinter.ttk 
+from constants.insertTask import append
 from services.insertUser import insert_user
 from services.insertTask import insert_task
 
@@ -27,7 +28,7 @@ def insertUser():
 def insertTask():
     newTaskList = [id.get(), taskName.get()]
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
-    insert_task([newTaskList])
+    insert_task([newTaskList], append)
 
 ###### USER UI #######
 # Create all labels required for users.csv, using grid for organization

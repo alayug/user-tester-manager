@@ -1,4 +1,3 @@
-
 import csv
 
 # Takes in a list of task

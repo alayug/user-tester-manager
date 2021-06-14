@@ -1,5 +1,5 @@
-from insertTask import insert_task
-from getTaskDetails import get_task_details
+from services.insertTask import insert_task
+from services.getTaskDetails import get_task_details
 
 def delete_task(taskId):
     # get all the current tasks in csv

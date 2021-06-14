@@ -12,5 +12,5 @@ def delete_task(taskId):
         if int(task[0]) != taskId:
             newTaskList.append(task)
     
-    # replace everything in current tasks.csv with newTaskList
+    # replace everything in current tasks.csv with newTaskList by passing in 'w' as second parameter
     insert_task(newTaskList,'w')

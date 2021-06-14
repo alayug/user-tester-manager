@@ -69,7 +69,7 @@ taskNameLabel = Label(root, text = "Task Name").grid(row = 1,column = 8)
 taskIdEntry = Entry(root, textvariable = id).grid(row = 0,column = 9)
 taskNameEntry = Entry(root, textvariable = taskName).grid(row = 1,column = 9)
 
-# button to trigger function to insert task data
+# button to trigger function to add task data
 Button(root ,text="Add Task", command=insertTask).grid(row=2,column=9)
 
 ###### DELETE TASK UI #######
@@ -79,7 +79,7 @@ deleteTaskLabel = Label(root, text = "Task Id").grid(row = 5,column = 8)
 # Create all entries required for tasks.csv
 deleteTaskEntry = Entry(root, textvariable = deleteTaskId).grid(row = 5,column = 9)
 
-# button to trigger function to insert task data
+# button to trigger function to delete task data
 Button(root ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
 
 

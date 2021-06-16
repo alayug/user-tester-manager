@@ -50,7 +50,7 @@ def getUserDetails():
 
 # Using Frame to group UI to two sections, top and bottom
 topFrame= Frame(root)
-topFrame.pack(side=TOP, fill=BOTH)
+topFrame.pack(side=TOP, fill=BOTH, expand=True)
 
 bottomFrame= Frame(root)
 bottomFrame.pack(side=BOTTOM, fill=BOTH)
@@ -111,7 +111,7 @@ class TreeView :
         tv.column('#0', width=0, stretch=NO)
         tv.column("First Name", anchor=CENTER, width=80)
         tv.column("Last Name", anchor=CENTER, width=80)
-        tv.column("Email Address", anchor=CENTER, width=80)
+        tv.column("Email Address", anchor=CENTER, width=100)
         tv.column("Phone Number", anchor=CENTER, width=80)
         tv.column("Task Id", anchor=CENTER, width=80)
 
@@ -128,7 +128,20 @@ class TreeView :
             tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
             index +=1
 
+        def delete():
+            x = tv.selection()[0]
+            tv.delete(x)
+     
+        def email():
+            messagebox.showinfo(None, message="Email Sent!")
+
+        deleteUserButton = Button(topFrame ,text="Delete", command=delete)
+        sendEmailButton = Button(topFrame ,text="Email User", command=email)
+
+
         tv.pack()
+        deleteUserButton.pack()
+        sendEmailButton.pack()
 
 treeView = TreeView(root)
 insertTask = InsertTask(root)

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from services.getUserDetails import get_user_details
 from tkinter import *
 import tkinter.ttk 
 from constants.insertTask import append
@@ -36,52 +37,98 @@ def insertTask():
 
 def deleteTask():
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
-    print("inside delete task")
     delete_task(deleteTaskId.get())
 
-###### USER UI #######
-# Create all labels required for users.csv, using grid for organization
-firstNameLabel = Label(root, text = "First Name").grid(row = 0,column = 0)
-lastNameLabel = Label(root, text = "Last Name").grid(row = 1,column = 0)
-emailAddressLabel = Label(root, text = "Email Address").grid(row = 2,column = 0)
-phoneNumberLabel = Label(root, text = "Phone Number").grid(row = 3,column = 0)
-taskIDLabel = Label(root, text = "Task Id").grid(row = 4,column = 0)
+def getUserDetails():
+    # execute get_user_detail
+    userDetailsList = get_user_details()
+    return userDetailsList
 
-# Create all entries required for users.csv
-firstNameEntry = Entry(root, textvariable = firstName).grid(row = 0,column = 1)
-lastNameEntry = Entry(root, textvariable = lastName).grid(row = 1,column = 1)
-emailAddressEntry = Entry(root, textvariable = emailAddress).grid(row = 2,column = 1)
-phoneNumberEntry = Entry(root, textvariable = phoneNumber).grid(row = 3,column = 1)
-taskIDEntry = Entry(root, textvariable = taskId).grid(row = 4,column = 1)
+# Using Frame to group UI to two sections, top and bottom
+topFrame= Frame(root)
+topFrame.pack(side=TOP, fill=BOTH)
 
-# button to trigger function to insert user data
-Button(root ,text="Add User", command=insertUser).grid(row=5,column=1)
+bottomFrame= Frame(root)
+bottomFrame.pack(side=BOTTOM, fill=BOTH)
 
-tkinter.ttk.Separator(root, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
+class InsertUser: 
+    def __init__(self,master) :
+        ###### USER UI #######
+        # Create all labels required for users.csv, using grid for organization
+        firstNameLabel = Label(bottomFrame, text = "First Name").grid(row = 0,column = 0)
+        lastNameLabel = Label(bottomFrame, text = "Last Name").grid(row = 1,column = 0)
+        emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 2,column = 0)
+        phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 3,column = 0)
+        taskIDLabel = Label(bottomFrame, text = "Task Id").grid(row = 4,column = 0)
+
+        # Create all entries required for users.csv
+        firstNameEntry = Entry(bottomFrame, textvariable = firstName).grid(row = 0,column = 1)
+        lastNameEntry = Entry(bottomFrame, textvariable = lastName).grid(row = 1,column = 1)
+        emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 2,column = 1)
+        phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 3,column = 1)
+        taskIDEntry = Entry(bottomFrame, textvariable = taskId).grid(row = 4,column = 1)
+
+        # button to trigger function to insert user data
+        Button(bottomFrame ,text="Add User", command=insertUser).grid(row=5,column=1)
+
+        tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
 
 
-###### INSERT TASK UI #######
-# Create all labels required for tasks.csv, using grid for organization
-taskIdLabel = Label(root, text = "Task Id").grid(row = 0,column = 8)
-taskNameLabel = Label(root, text = "Task Name").grid(row = 1,column = 8)
+class InsertTask:
+    def __init__(self, master):
+        ###### INSERT TASK UI #######
+        # Create all labels required for tasks.csv, using grid for organization
+        taskIdLabel = Label(bottomFrame, text = "Task Id").grid(row = 0,column = 8)
+        taskNameLabel = Label(bottomFrame, text = "Task Name").grid(row = 1,column = 8)
 
-# Create all entries required for tasks.csv
-taskIdEntry = Entry(root, textvariable = id).grid(row = 0,column = 9)
-taskNameEntry = Entry(root, textvariable = taskName).grid(row = 1,column = 9)
+        # Create all entries required for tasks.csv
+        taskIdEntry = Entry(bottomFrame, textvariable = id).grid(row = 0,column = 9)
+        taskNameEntry = Entry(bottomFrame, textvariable = taskName).grid(row = 1,column = 9)
 
-# button to trigger function to add task data
-Button(root ,text="Add Task", command=insertTask).grid(row=2,column=9)
+        # button to trigger function to add task data
+        Button(bottomFrame ,text="Add Task", command=insertTask).grid(row=2,column=9)
 
-###### DELETE TASK UI #######
-# Create all labels required for tasks.csv, using grid for organization
-deleteTaskLabel = Label(root, text = "Task Id").grid(row = 5,column = 8)
+        ###### DELETE TASK UI #######
+        # Create all labels required for tasks.csv, using grid for organization
+        deleteTaskLabel = Label(bottomFrame, text = "Task Id").grid(row = 5,column = 8)
 
-# Create all entries required for tasks.csv
-deleteTaskEntry = Entry(root, textvariable = deleteTaskId).grid(row = 5,column = 9)
+        # Create all entries required for tasks.csv
+        deleteTaskEntry = Entry(bottomFrame, textvariable = deleteTaskId).grid(row = 5,column = 9)
 
-# button to trigger function to delete task data
-Button(root ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
+        # button to trigger function to delete task data
+        Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
 
+
+class TreeView :
+    def __init__(self, master):
+        ####### SELECTION FIELD #########
+        tv = tkinter.ttk.Treeview(topFrame)
+        tv['columns']=("First Name", "Last Name", "Email Address", "Phone Number", "Task Id")
+        tv.column('#0', width=0, stretch=NO)
+        tv.column("First Name", anchor=CENTER, width=80)
+        tv.column("Last Name", anchor=CENTER, width=80)
+        tv.column("Email Address", anchor=CENTER, width=80)
+        tv.column("Phone Number", anchor=CENTER, width=80)
+        tv.column("Task Id", anchor=CENTER, width=80)
+
+        tv.heading('#0', text='', anchor=CENTER)
+        tv.heading("First Name", text="First Name", anchor=CENTER)
+        tv.heading("Last Name", text="Last Name", anchor=CENTER)
+        tv.heading("Email Address", text="Email Address", anchor=CENTER)
+        tv.heading("Phone Number", text="Phone Number", anchor=CENTER)
+        tv.heading("Task Id", text="Task Id", anchor=CENTER)
+
+        index = 0
+
+        for user in getUserDetails():
+            tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
+            index +=1
+
+        tv.pack()
+
+treeView = TreeView(root)
+insertTask = InsertTask(root)
+insertUser = InsertUser(root)
 
 #this will run the mainloop.
 root.mainloop()

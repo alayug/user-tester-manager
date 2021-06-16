@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from services.getUserDetails import get_user_details
 from tkinter import *
+from tkinter import messagebox
 import tkinter.ttk 
 from constants.insertTask import append
 from services.insertUser import insert_user
@@ -29,15 +30,18 @@ deleteTaskId = IntVar()
 def insertUser():
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
    insert_user(firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get())
+   messagebox.showinfo(title=None, message="User was inserted successfully!")
 
 def insertTask():
     newTaskList = [id.get(), taskName.get()]
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
     insert_task([newTaskList], append)
+    messagebox.showinfo(title=None, message="Task was inserted successfully!")
 
 def deleteTask():
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
     delete_task(deleteTaskId.get())
+    messagebox.showinfo(title=None, message="Task was deleted successfully!")
 
 def getUserDetails():
     # execute get_user_detail

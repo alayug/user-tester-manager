@@ -7,6 +7,7 @@ from constants.insertTask import append
 from services.insertUser import insert_user
 from services.insertTask import insert_task
 from services.deleteTask import delete_task
+from services.deleteUser import delete_user
 
 root = Tk()
 
@@ -29,7 +30,7 @@ deleteTaskId = IntVar()
 
 def insertUser():
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-   insert_user(firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get())
+   insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get()]], 'a')
    messagebox.showinfo(title=None, message="User was inserted successfully!")
 
 def insertTask():
@@ -42,6 +43,11 @@ def deleteTask():
     # execute insert_task function. Retrieving the entry data by invoking get() on the variables
     delete_task(deleteTaskId.get())
     messagebox.showinfo(title=None, message="Task was deleted successfully!")
+
+def deleteUser(emailFromSelectedItemInTreeView):
+    # execute insert_user function. Retrieving the entry data by invoking get() on the variables
+    delete_user(emailFromSelectedItemInTreeView)
+    messagebox.showinfo(title=None, message="User was deleted successfully!")
 
 def getUserDetails():
     # execute get_user_detail
@@ -124,13 +130,20 @@ class TreeView :
 
         index = 0
 
+        # Creates a row for each item in getUserDetails result list
         for user in getUserDetails():
             tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
             index +=1
 
         def delete():
-            x = tv.selection()[0]
-            tv.delete(x)
+            # Gets selected item index
+            selectedItem = tv.selection()
+            # Using index, get the item and then the value at index 2 which equals to emailAddress
+            emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
+            # Delete user from users.csv
+            deleteUser(emailFromSelectedItemInTreeView)
+            # Delete row from TreeView
+            tv.delete(selectedItem)
      
         def email():
             messagebox.showinfo(None, message="Email Sent!")

@@ -5,7 +5,7 @@ def get_user_details():
     userDetailsList = []
 
     # opens csv file, using 'r' for read
-    with open(r'C:\bench\user-tester-manager\database\users.csv', 'r') as f:
+    with open(r'database\users.csv', 'r') as f:
         # csv reader will each line of data in the csv file
         reader = csv.reader(f)
         # for each row in the csv file, append to userDetailsList

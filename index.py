@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from services.emailService import send_email
 from services.getUserDetails import get_user_details
 from tkinter import *
 from tkinter import messagebox
@@ -29,6 +30,10 @@ taskName = StringVar()
 deleteTaskId = StringVar()
 
 message = ""
+emailFromSelectedItemInTreeView =""
+
+# Password for email service
+password = StringVar()
 
 def insertUser():
     # Validation check on fields to ensure it is not empty
@@ -180,15 +185,31 @@ class TreeView :
                 tv.delete(selectedItem)
      
         def email():
-            messagebox.showinfo(title="UNDER CONSTRUCTION", message="Email Sent! (Need code to send email)")
+            selectedItem = tv.selection()
+            passwordValue = password.get()
+            if passwordValue == "":
+                message = "Please enter the password below before using the email service."
+            elif tv.item(selectedItem)['values']=="" :
+                message="Please select a user to delete." 
+            else: 
+                emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
+                send_email(emailFromSelectedItemInTreeView,passwordValue)
+                message = "Email Sent!"
+            messagebox.showinfo(title="Email Service", message=message)
 
         deleteUserButton = Button(topFrame ,text="Delete", command=delete)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
+        # Create all labels required for tasks.csv, using grid for organization
+        deleteTaskLabel = Label(topFrame, text = "Password for Email")
+        # Create all entries required for tasks.csv
+        deleteTaskEntry = Entry(topFrame, textvariable = password)
 
 
         tv.pack()
         deleteUserButton.pack()
         sendEmailButton.pack()
+        deleteTaskLabel.pack()
+        deleteTaskEntry.pack()
 
 treeView = TreeView(root)
 insertTask = InsertTask(root)

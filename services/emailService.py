@@ -1,18 +1,21 @@
 import smtplib
-import ssl
+from email.message import EmailMessage
 
-def send_email(email):
+def send_email(email, password):
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
-    sender_email = "alianapythonclass@gmail.com"  # Enter your address
-    receiver_email = email 
-    password = input("Type your password and press enter: ")
-    message = """\
-    Subject: Aliana's Python Email Service
+    sender_email = "alianapythonclass@gmail.com" 
 
-    Hello! This email is from my project!"""
+    msg = EmailMessage()
+    # Set the body/message of your email
+    msg.set_content('Hello! This is a reminder to do your task! :)')
 
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message)
+    msg['Subject'] = 'Python User Tester Manager'
+    msg['From'] = sender_email
+    msg['To'] = email
+
+    # Connect to host and send email
+    server= smtplib.SMTP_SSL(smtp_server, port)
+    server.login(sender_email, password)
+    server.send_message(msg)
+

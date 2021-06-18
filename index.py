@@ -28,8 +28,9 @@ taskName = StringVar()
 # Create all variables required for deleteTask 
 deleteTaskId = StringVar()
 
+message = ""
+
 def insertUser():
-    message = ""
     # Validation check on fields to ensure it is not empty
     if firstName.get() == "":
         message = "First Name can't be empty!"
@@ -49,7 +50,6 @@ def insertUser():
 
 
 def insertTask():
-    message = ""
     # Validation check on fields to ensure it is not empty
     if id.get() == "":
         message = "Task Id can't be empty!"
@@ -63,7 +63,6 @@ def insertTask():
     messagebox.showinfo(title=None, message=message)
 
 def deleteTask():
-    message = ""
     if deleteTaskId.get() == "":
         message = "You must enter a task id to delete it!"
     else:
@@ -73,7 +72,6 @@ def deleteTask():
     messagebox.showinfo(title=None, message=message)
 
 def deleteUser(emailFromSelectedItemInTreeView):
-    message = ""
     if emailFromSelectedItemInTreeView == "":
         message = "Please select a user to delete!"
     else:
@@ -182,7 +180,7 @@ class TreeView :
                 tv.delete(selectedItem)
      
         def email():
-            messagebox.showinfo(None, message="Email Sent!")
+            messagebox.showinfo(title="UNDER CONSTRUCTION", message="Email Sent! (Need code to send email)")
 
         deleteUserButton = Button(topFrame ,text="Delete", command=delete)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)

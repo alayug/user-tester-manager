@@ -63,9 +63,14 @@ def insertTask():
     messagebox.showinfo(title=None, message=message)
 
 def deleteTask():
-    # execute insert_task function. Retrieving the entry data by invoking get() on the variables
-    delete_task(deleteTaskId.get())
-    messagebox.showinfo(title=None, message="Task was deleted successfully!")
+    message = ""
+    if deleteTaskId == "":
+        message = "You must enter a task id to delete it!"
+    else:
+        # execute insert_task function. Retrieving the entry data by invoking get() on the variables
+        delete_task(deleteTaskId.get())
+        message = "Task was deleted successfully!"
+    messagebox.showinfo(title=None, message=message)
 
 def deleteUser(emailFromSelectedItemInTreeView):
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables

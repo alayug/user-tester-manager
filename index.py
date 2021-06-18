@@ -29,9 +29,24 @@ taskName = StringVar()
 deleteTaskId = IntVar()
 
 def insertUser():
+    message = ""
+    # Validation check on fields to ensure it is not empty
+    if firstName.get() == "":
+        message = "First Name can't be empty!"
+    elif lastName.get() =="":
+        message = "Last Name can't be empty!"
+    elif emailAddress.get() =="":
+        message = "Email Address can't be empty!"
+    elif phoneNumber.get() =="":
+        message = "Phone Number can't be empty!"
+    elif taskId.get() =="":
+        message = "Task Id can't be empty!"
+    else:
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-   insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get()]], 'a')
-   messagebox.showinfo(title=None, message="User was inserted successfully!")
+        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), taskId.get()]], 'a')
+        message = "User was inserted successfully!"
+    messagebox.showinfo(title=None, message=message)
+
 
 def insertTask():
     newTaskList = [id.get(), taskName.get()]

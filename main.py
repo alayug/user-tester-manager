@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator
 from services.emailService import send_email
 from services.getUserDetails import get_user_details
 from tkinter import *
@@ -36,13 +37,17 @@ emailFromSelectedItemInTreeView =""
 password = StringVar()
 
 def insertUser():
+    firstNameValidatorMessage = firstNameValidator(firstName.get())
+    lastNameValidatorMessage = lastNameValidator(lastName.get())
+    emailAddressValidatorMessage = emailValidator(emailAddress.get())
+
     # Validation check on fields to ensure it is not empty
-    if firstName.get() == "":
-        message = "First Name can't be empty!"
-    elif lastName.get() =="":
-        message = "Last Name can't be empty!"
-    elif emailAddress.get() =="":
-        message = "Email Address can't be empty!"
+    if firstNameValidatorMessage != "":
+        message = firstNameValidatorMessage
+    elif lastNameValidatorMessage != "":
+        message = lastNameValidatorMessage
+    elif emailAddressValidatorMessage != "":
+        message = emailAddressValidatorMessage
     elif phoneNumber.get() =="":
         message = "Phone Number can't be empty!"
     elif taskId.get() =="":

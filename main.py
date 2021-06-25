@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator
+from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
 from services.emailService import send_email
 from services.getUserDetails import get_user_details
 from tkinter import *
@@ -40,6 +40,7 @@ def insertUser():
     firstNameValidatorMessage = firstNameValidator(firstName.get())
     lastNameValidatorMessage = lastNameValidator(lastName.get())
     emailAddressValidatorMessage = emailValidator(emailAddress.get())
+    phoneNumberValidatorMessage = phoneNumberValidator(phoneNumber.get())
 
     # Validation check on fields to ensure it is not empty
     if firstNameValidatorMessage != "":
@@ -48,8 +49,8 @@ def insertUser():
         message = lastNameValidatorMessage
     elif emailAddressValidatorMessage != "":
         message = emailAddressValidatorMessage
-    elif phoneNumber.get() =="":
-        message = "Phone Number can't be empty!"
+    elif phoneNumberValidatorMessage != "":
+        message = phoneNumberValidatorMessage
     elif taskId.get() =="":
         message = "Task Id can't be empty!"
     else:

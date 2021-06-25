@@ -18,15 +18,24 @@ def lastNameValidator(lastName):
 
 def emailValidator(email):
     # regex for email address
-    regex = '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
+    emailRegex = '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
     message = ""
     if email == "":
         message = "Email address can't be empty!"
-    elif(re.search(regex, email) == None):
-        print(re.search(regex, email))
+    elif(re.search(emailRegex, email) == None):
         message = "Invalid email, it must consist of one '@', ends with '.' along with a minimum of two characters, and may not consist of special characters."
     return message
 
 #phone number
+def phoneNumberValidator(phoneNumber):
+    phoneNumberRegex = '[0-9]{3}-[0-9]{3}-[0-9]{4}'
+    message = ""
+    if phoneNumber == "":
+        message = "Phone number can't be empty!"
+    elif(re.search(phoneNumberRegex,phoneNumber) == None):
+        message = "Invalid phone number, it must only contain numbers and - be in the following format: 111-222-3333"
+    return message
 
 #task id
+# skipping as it will be changed to a dropdown selection
+# validator will be in insertTaskValidator

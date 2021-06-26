@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
 from services.emailService import send_email
 from services.getUserDetails import get_user_details
@@ -61,11 +62,12 @@ def insertUser():
 
 
 def insertTask():
+    taskNameValidatorMessage = taskNameValidator(taskName.get())
     # Validation check on fields to ensure it is not empty
     if id.get() == "":
         message = "Task Id can't be empty!"
-    elif taskName.get() =="":
-        message = "Task Name can't be empty!"
+    elif taskNameValidatorMessage !="":
+        message = taskNameValidatorMessage
     else:
         newTaskList = [int(id.get()), taskName.get()]
         # execute insert_task function. Retrieving the entry data by invoking get() on the variables

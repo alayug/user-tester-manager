@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from services.getTaskDetails import get_task_details, get_task_detail_names
 from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
 from services.emailService import send_email
@@ -22,7 +23,7 @@ firstName = StringVar()
 lastName = StringVar()
 emailAddress = StringVar()
 phoneNumber = StringVar()
-taskId = StringVar()
+selectedDropDownTask = StringVar(root)
 
 # Create all variables required for insertTask
 id = StringVar()
@@ -52,11 +53,11 @@ def insertUser():
         message = emailAddressValidatorMessage
     elif phoneNumberValidatorMessage != "":
         message = phoneNumberValidatorMessage
-    elif taskId.get() =="":
+    elif selectedDropDownTask.get() =="":
         message = "Task Id can't be empty!"
     else:
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), int(taskId.get())]], 'a')
+        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), int(selectedDropDownTask.get())]], 'a')
         message = "User was inserted successfully!"
     messagebox.showinfo(title=None, message=message)
 
@@ -98,6 +99,10 @@ def getUserDetails():
     userDetailsList = get_user_details()
     return userDetailsList
 
+def getAllTaskNames():
+    taskDetailNamesList = get_task_detail_names()
+    return taskDetailNamesList
+
 # Using Frame to group UI to two sections, top and bottom
 topFrame= Frame(root)
 topFrame.pack(side=TOP, fill=BOTH, expand=True)
@@ -120,10 +125,18 @@ class InsertUser:
         lastNameEntry = Entry(bottomFrame, textvariable = lastName).grid(row = 1,column = 1)
         emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 2,column = 1)
         phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 3,column = 1)
-        taskIDEntry = Entry(bottomFrame, textvariable = taskId).grid(row = 4,column = 1)
 
+        # Get list of task names
+        taskNamesList = getAllTaskNames()
+        # Set default value
+        selectedDropDownTask.set("Select One")
+        print(taskNamesList)
+        # Create default dropdown menu
+        OptionMenu(bottomFrame, selectedDropDownTask, *taskNamesList).grid(row = 4,column = 1)
+        
         # button to trigger function to insert user data
         Button(bottomFrame ,text="Add User", command=insertUser).grid(row=5,column=1)
+
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
 
@@ -218,7 +231,7 @@ class TreeView :
         sendEmailButton.pack()
         deleteTaskLabel.pack()
         deleteTaskEntry.pack()
-
+        
 treeView = TreeView(root)
 insertTask = InsertTask(root)
 insertUser = InsertUser(root)

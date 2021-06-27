@@ -26,8 +26,8 @@ phoneNumber = StringVar()
 selectedDropDownTask = StringVar(root)
 
 # Create all variables required for insertTask
-id = StringVar()
-taskName = StringVar()
+insertTaskId = StringVar()
+insertTaskName = StringVar()
 
 # Create all variables required for deleteTask 
 deleteTaskId = StringVar()
@@ -53,27 +53,28 @@ def insertUser():
         message = emailAddressValidatorMessage
     elif phoneNumberValidatorMessage != "":
         message = phoneNumberValidatorMessage
-    elif selectedDropDownTask.get() =="":
-        message = "Task Id can't be empty!"
+    elif selectedDropDownTask.get() =="Select One":
+        message = "You must select a task from the task list!"
     else:
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), int(selectedDropDownTask.get())]], 'a')
-        message = "User was inserted successfully!"
+        print(selectedDropDownTask.get())
+        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
+        message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
 
 
 def insertTask():
-    taskNameValidatorMessage = taskNameValidator(taskName.get())
+    taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
     # Validation check on fields to ensure it is not empty
-    if id.get() == "":
+    if insertTaskId.get() == "":
         message = "Task Id can't be empty!"
     elif taskNameValidatorMessage !="":
         message = taskNameValidatorMessage
     else:
-        newTaskList = [int(id.get()), taskName.get()]
+        newTaskList = [int(insertTaskId.get()), insertTaskName.get()]
         # execute insert_task function. Retrieving the entry data by invoking get() on the variables
         insert_task([newTaskList], append)
-        message = "Task inserted successfully!"
+        message = "Task added successfully!"
     messagebox.showinfo(title=None, message=message)
 
 def deleteTask():
@@ -118,7 +119,7 @@ class InsertUser:
         lastNameLabel = Label(bottomFrame, text = "Last Name").grid(row = 1,column = 0)
         emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 2,column = 0)
         phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 3,column = 0)
-        taskIDLabel = Label(bottomFrame, text = "Task Id").grid(row = 4,column = 0)
+        taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 4,column = 0)
 
         # Create all entries required for users.csv
         firstNameEntry = Entry(bottomFrame, textvariable = firstName).grid(row = 0,column = 1)
@@ -149,8 +150,8 @@ class InsertTask:
         taskNameLabel = Label(bottomFrame, text = "Task Name").grid(row = 1,column = 8)
 
         # Create all entries required for tasks.csv
-        taskIdEntry = Entry(bottomFrame, textvariable = id).grid(row = 0,column = 9)
-        taskNameEntry = Entry(bottomFrame, textvariable = taskName).grid(row = 1,column = 9)
+        taskIdEntry = Entry(bottomFrame, textvariable = insertTaskId).grid(row = 0,column = 9)
+        taskNameEntry = Entry(bottomFrame, textvariable = insertTaskName).grid(row = 1,column = 9)
 
         # button to trigger function to add task data
         Button(bottomFrame ,text="Add Task", command=insertTask).grid(row=2,column=9)

@@ -71,7 +71,6 @@ def insertUser():
         message = "You must select a task from the task list!"
     else:
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-        print(selectedDropDownTask.get())
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
@@ -141,7 +140,6 @@ class InsertUser:
         taskNamesList = getAllTaskNames()
         # Set default value
         selectedDropDownTask.set("Select One")
-        print(taskNamesList)
         # Create default dropdown menu
         OptionMenu(bottomFrame, selectedDropDownTask, *taskNamesList).grid(row = 4,column = 1)
         

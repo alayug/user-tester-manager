@@ -61,7 +61,7 @@ def insertUser():
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
-
+    
 
 def insertTask():
     taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
@@ -140,8 +140,7 @@ class InsertUser:
 
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
-
-
+        
 class InsertTask:
     def __init__(self, master):
         ###### INSERT TASK UI #######
@@ -214,8 +213,10 @@ class TreeView :
             elif tv.item(selectedItem)['values']=="" :
                 message="Please select a user to delete." 
             else: 
+                firstNameFromSelectedItemInTreeView = tv.item(selectedItem)['values'][0]
                 emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
-                send_email(emailFromSelectedItemInTreeView,passwordValue)
+                taskNameFromSelectedItemInTreeView = tv.item(selectedItem)['values'][4]
+                send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView)
                 message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
 

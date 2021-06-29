@@ -52,12 +52,13 @@ emailFromSelectedItemInTreeView =""
 password = StringVar()
 
 def insertUser():
+    # Validates every field in insertUser to ensure it meets criteria
     firstNameValidatorMessage = firstNameValidator(firstName.get())
     lastNameValidatorMessage = lastNameValidator(lastName.get())
     emailAddressValidatorMessage = emailValidator(emailAddress.get())
     phoneNumberValidatorMessage = phoneNumberValidator(phoneNumber.get())
 
-    # Validation check on fields to ensure it is not empty
+    # If any fields return a message indicating a regex violation, display the message in a messagebox
     if firstNameValidatorMessage != "":
         message = firstNameValidatorMessage
     elif lastNameValidatorMessage != "":
@@ -110,16 +111,15 @@ def deleteUser(emailFromSelectedItemInTreeView):
     messagebox.showinfo(title=None, message=message)
     updateTreeView()
 
+# Returns a list of user details
 def getUserDetails():
-    # execute get_user_detail
     userDetailsList = get_user_details()
     return userDetailsList
 
+# Returns a list of task names
 def getAllTaskNames():
     taskDetailNamesList = get_task_detail_names()
     return taskDetailNamesList
-
-
 
 class InsertUser: 
     def __init__(self,master) :
@@ -147,7 +147,6 @@ class InsertUser:
         
         # button to trigger function to insert user data
         Button(bottomFrame ,text="Add User", command=insertUser).grid(row=5,column=1)
-
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
         
@@ -223,10 +222,13 @@ class TreeView :
                 deleteUser(emailFromSelectedItemInTreeView)
      
         def email():
+            # Gets currently selected item's data
             selectedItem = tv.selection()
+            # Retrieves password from password field
             passwordValue = password.get()
             if passwordValue == "":
                 message = "Please enter the password below before using the email service."
+            # Prompt user to select a item in treeview if none is selected
             elif tv.item(selectedItem)['values']=="" :
                 message="Please select a user to delete." 
             else: 
@@ -243,7 +245,6 @@ class TreeView :
         deleteTaskLabel = Label(topFrame, text = "Password for Email")
         # Create all entries required for tasks.csv
         deleteTaskEntry = Entry(topFrame, textvariable = password)
-
 
         tv.pack()
         deleteUserButton.pack()

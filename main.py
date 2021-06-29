@@ -18,6 +18,16 @@ root = Tk()
 # Create the size of the widget
 root.geometry('500x500')
 
+# Using Frame to group UI to two sections, top and bottom
+topFrame= Frame(root)
+topFrame.pack(side=TOP, fill=BOTH, expand=True)
+
+bottomFrame= Frame(root)
+bottomFrame.pack(side=BOTTOM, fill=BOTH)
+
+# Create treeview (table) for users
+tv = tkinter.ttk.Treeview(topFrame)
+
 # Create all variables required for insertUsers
 firstName = StringVar()
 lastName = StringVar()
@@ -32,7 +42,10 @@ insertTaskName = StringVar()
 # Create all variables required for deleteTask 
 deleteTaskId = StringVar()
 
+# Message/Alert box message holder
 message = ""
+
+# Email from the selected item in treeview
 emailFromSelectedItemInTreeView =""
 
 # Password for email service
@@ -61,7 +74,7 @@ def insertUser():
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
-    
+    updateTreeView()
 
 def insertTask():
     taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
@@ -76,6 +89,7 @@ def insertTask():
         insert_task([newTaskList], append)
         message = "Task added successfully!"
     messagebox.showinfo(title=None, message=message)
+    updateTreeView()
 
 def deleteTask():
     if deleteTaskId.get() == "":
@@ -94,6 +108,7 @@ def deleteUser(emailFromSelectedItemInTreeView):
         delete_user(emailFromSelectedItemInTreeView)
         message = "User was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
+    updateTreeView()
 
 def getUserDetails():
     # execute get_user_detail
@@ -104,12 +119,7 @@ def getAllTaskNames():
     taskDetailNamesList = get_task_detail_names()
     return taskDetailNamesList
 
-# Using Frame to group UI to two sections, top and bottom
-topFrame= Frame(root)
-topFrame.pack(side=TOP, fill=BOTH, expand=True)
 
-bottomFrame= Frame(root)
-bottomFrame.pack(side=BOTTOM, fill=BOTH)
 
 class InsertUser: 
     def __init__(self,master) :
@@ -166,10 +176,24 @@ class InsertTask:
         Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
 
 
+def updateTreeView():
+    # Deletes all contents of treeview
+    tv.delete(*tv.get_children())
+    # Repopulate treeview with newest user details
+    insertUserDetailsIntoTreeView()
+
+def insertUserDetailsIntoTreeView():
+    index = 0
+
+    # Creates a row for each item in getUserDetails result list
+    for user in getUserDetails():
+        tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
+        index +=1
+
 class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
-        tv = tkinter.ttk.Treeview(topFrame)
+        
         tv['columns']=("First Name", "Last Name", "Email Address", "Phone Number", "Task Name")
         tv.column('#0', width=0, stretch=NO)
         tv.column("First Name", anchor=CENTER, width=80)
@@ -185,12 +209,7 @@ class TreeView :
         tv.heading("Phone Number", text="Phone Number", anchor=CENTER)
         tv.heading("Task Name", text="Task Name", anchor=CENTER)
 
-        index = 0
-
-        # Creates a row for each item in getUserDetails result list
-        for user in getUserDetails():
-            tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
-            index +=1
+        insertUserDetailsIntoTreeView()
 
         def delete():
             # Gets selected item index

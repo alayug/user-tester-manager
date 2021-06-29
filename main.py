@@ -170,20 +170,20 @@ class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
         tv = tkinter.ttk.Treeview(topFrame)
-        tv['columns']=("First Name", "Last Name", "Email Address", "Phone Number", "Task Id")
+        tv['columns']=("First Name", "Last Name", "Email Address", "Phone Number", "Task Name")
         tv.column('#0', width=0, stretch=NO)
         tv.column("First Name", anchor=CENTER, width=80)
         tv.column("Last Name", anchor=CENTER, width=80)
-        tv.column("Email Address", anchor=CENTER, width=100)
-        tv.column("Phone Number", anchor=CENTER, width=80)
-        tv.column("Task Id", anchor=CENTER, width=80)
+        tv.column("Email Address", anchor=CENTER, width=120)
+        tv.column("Phone Number", anchor=CENTER, width=100)
+        tv.column("Task Name", anchor=CENTER, width=80)
 
         tv.heading('#0', text='', anchor=CENTER)
         tv.heading("First Name", text="First Name", anchor=CENTER)
         tv.heading("Last Name", text="Last Name", anchor=CENTER)
         tv.heading("Email Address", text="Email Address", anchor=CENTER)
         tv.heading("Phone Number", text="Phone Number", anchor=CENTER)
-        tv.heading("Task Id", text="Task Id", anchor=CENTER)
+        tv.heading("Task Name", text="Task Name", anchor=CENTER)
 
         index = 0
 

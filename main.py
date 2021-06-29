@@ -221,8 +221,6 @@ class TreeView :
                 emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
                 # Delete user from users.csv
                 deleteUser(emailFromSelectedItemInTreeView)
-                # Delete row from TreeView
-                tv.delete(selectedItem)
      
         def email():
             selectedItem = tv.selection()

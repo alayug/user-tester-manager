@@ -27,3 +27,8 @@ def get_task_detail_names():
             taskListNames.append(row[1])
   
     return taskListNames
+
+def get_last_task_id():
+    taskDetailsList = get_task_details()
+    lastId = len(taskDetailsList)
+    return lastId

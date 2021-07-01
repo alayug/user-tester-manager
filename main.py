@@ -81,6 +81,7 @@ def insertTask():
     if taskNameValidatorMessage !="":
         message = taskNameValidatorMessage
     else:
+        # Get the most recent task id number and add 1 to create next task id
         nextTaskId = int(get_last_task_id()) + 1
         newTaskList = [nextTaskId, insertTaskName.get()]
         # execute insert_task function. Retrieving the entry data by invoking get() on the variables

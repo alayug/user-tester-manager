@@ -29,6 +29,9 @@ def get_task_detail_names():
     return taskListNames
 
 def get_last_task_id():
+    # Get list of current tasks
     taskDetailsList = get_task_details()
-    lastId = len(taskDetailsList)
-    return lastId
+    # Get last list item of taskDetailsList
+    lastTaskInList = taskDetailsList[len(taskDetailsList) - 1]
+    # Return the task id of the last item in the list
+    return lastTaskInList[0]

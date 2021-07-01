@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from services.getTaskDetails import get_task_details, get_task_detail_names
+from services.getTaskDetails import get_last_task_id, get_task_details, get_task_detail_names
 from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
 from services.emailService import send_email
@@ -36,7 +36,6 @@ phoneNumber = StringVar()
 selectedDropDownTask = StringVar(root)
 
 # Create all variables required for insertTask
-insertTaskId = StringVar()
 insertTaskName = StringVar()
 
 # Create all variables required for deleteTask 
@@ -79,12 +78,11 @@ def insertUser():
 def insertTask():
     taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
     # Validation check on fields to ensure it is not empty
-    if insertTaskId.get() == "":
-        message = "Task Id can't be empty!"
-    elif taskNameValidatorMessage !="":
+    if taskNameValidatorMessage !="":
         message = taskNameValidatorMessage
     else:
-        newTaskList = [int(insertTaskId.get()), insertTaskName.get()]
+        nextTaskId = int(get_last_task_id()) + 1
+        newTaskList = [nextTaskId, insertTaskName.get()]
         # execute insert_task function. Retrieving the entry data by invoking get() on the variables
         insert_task([newTaskList], append)
         message = "Task added successfully!"
@@ -152,11 +150,9 @@ class InsertTask:
     def __init__(self, master):
         ###### INSERT TASK UI #######
         # Create all labels required for tasks.csv, using grid for organization
-        taskIdLabel = Label(bottomFrame, text = "Task Id").grid(row = 0,column = 8)
         taskNameLabel = Label(bottomFrame, text = "Task Name").grid(row = 1,column = 8)
 
         # Create all entries required for tasks.csv
-        taskIdEntry = Entry(bottomFrame, textvariable = insertTaskId).grid(row = 0,column = 9)
         taskNameEntry = Entry(bottomFrame, textvariable = insertTaskName).grid(row = 1,column = 9)
 
         # button to trigger function to add task data

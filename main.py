@@ -39,7 +39,7 @@ selectedDropDownTask = StringVar(root)
 insertTaskName = StringVar()
 
 # Create all variables required for deleteTask 
-deleteTaskId = StringVar()
+selectedDropDownDeleteTask = StringVar()
 
 # Message/Alert box message holder
 message = ""
@@ -91,11 +91,16 @@ def insertTask():
     updateTreeView()
 
 def deleteTask():
-    if deleteTaskId.get() == "":
-        message = "You must enter a task id to delete it!"
+    # If no task has been selected from dropdown, throw a message
+    if selectedDropDownDeleteTask.get() == "Select a task":
+        message = "You must select a task to delete!"
     else:
-        # execute insert_task function. Retrieving the entry data by invoking get() on the variables
-        delete_task(deleteTaskId.get())
+        # Gets current string of selected drop down delete task
+        selectedDeleteTaskString = selectedDropDownDeleteTask.get()
+        # Split the string by ' to get the string value of the task id
+        stringTaskId = selectedDeleteTaskString.split("'")
+        # Execute delete_task with int by converting string value of task id to int
+        delete_task(int(stringTaskId[1]))
         message = "Task was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
 
@@ -160,11 +165,15 @@ class InsertTask:
         Button(bottomFrame ,text="Add Task", command=insertTask).grid(row=2,column=9)
 
         ###### DELETE TASK UI #######
-        # Create all labels required for tasks.csv, using grid for organization
-        deleteTaskLabel = Label(bottomFrame, text = "Task Id").grid(row = 5,column = 8)
+        # Get all tasks to populate
+        taskDetailsList = get_task_details()
 
-        # Create all entries required for tasks.csv
-        deleteTaskEntry = Entry(bottomFrame, textvariable = deleteTaskId).grid(row = 5,column = 9)
+        # Create all labels required for tasks.csv, using grid for organization
+        deleteTaskLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 8)
+
+        selectedDropDownDeleteTask.set("Select a task")
+        # Create dropdown of all tasks
+        deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList).grid(row = 5,column = 9)
 
         # button to trigger function to delete task data
         Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)

@@ -6,6 +6,7 @@ from services.emailService import send_email
 from services.getUserDetails import get_user_details
 from tkinter import *
 from tkinter import messagebox
+import tkinter.font as tkFont
 import tkinter.ttk 
 from constants.insertTask import append
 from services.insertUser import insert_user
@@ -128,27 +129,28 @@ class InsertUser:
     def __init__(self,master) :
         ###### USER UI #######
         # Create all labels required for users.csv, using grid for organization
-        firstNameLabel = Label(bottomFrame, text = "First Name").grid(row = 0,column = 0)
-        lastNameLabel = Label(bottomFrame, text = "Last Name").grid(row = 1,column = 0)
-        emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 2,column = 0)
-        phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 3,column = 0)
-        taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 4,column = 0)
+        insertUserTitle = Label(bottomFrame, text = "Add User", anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
+        firstNameLabel = Label(bottomFrame, text = "First Name").grid(row = 1,column = 0)
+        lastNameLabel = Label(bottomFrame, text = "Last Name").grid(row = 2,column = 0)
+        emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 3,column = 0)
+        phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 4,column = 0)
+        taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 0)
 
         # Create all entries required for users.csv
-        firstNameEntry = Entry(bottomFrame, textvariable = firstName).grid(row = 0,column = 1)
-        lastNameEntry = Entry(bottomFrame, textvariable = lastName).grid(row = 1,column = 1)
-        emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 2,column = 1)
-        phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 3,column = 1)
+        firstNameEntry = Entry(bottomFrame, textvariable = firstName).grid(row = 1,column = 1)
+        lastNameEntry = Entry(bottomFrame, textvariable = lastName).grid(row = 2,column = 1)
+        emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 3,column = 1)
+        phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 4,column = 1)
 
         # Get list of task names
         taskNamesList = getAllTaskNames()
         # Set default value
         selectedDropDownTask.set("Select One")
         # Create default dropdown menu
-        OptionMenu(bottomFrame, selectedDropDownTask, *taskNamesList).grid(row = 4,column = 1)
+        OptionMenu(bottomFrame, selectedDropDownTask, *taskNamesList).grid(row = 5,column = 1)
         
         # button to trigger function to insert user data
-        Button(bottomFrame ,text="Add User", command=insertUser).grid(row=5,column=1)
+        Button(bottomFrame ,text="Add User", command=insertUser).grid(row=6,column=1)
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
         
@@ -156,6 +158,7 @@ class InsertTask:
     def __init__(self, master):
         ###### INSERT TASK UI #######
         # Create all labels required for tasks.csv, using grid for organization
+        addTaskTitle = Label(bottomFrame, text = "Add Task", font=tkFont.Font(size=16)).grid(row = 0,column = 9)
         taskNameLabel = Label(bottomFrame, text = "Task Name").grid(row = 1,column = 8)
 
         # Create all entries required for tasks.csv
@@ -167,7 +170,7 @@ class InsertTask:
         ###### DELETE TASK UI #######
         # Get all tasks to populate
         taskDetailsList = get_task_details()
-
+        deleteTaskTitle = Label(bottomFrame, text = "Delete Task", font=tkFont.Font(size=16)).grid(row = 4,column = 9)
         # Create all labels required for tasks.csv, using grid for organization
         deleteTaskLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 8)
 

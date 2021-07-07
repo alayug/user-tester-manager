@@ -16,7 +16,7 @@ from services.deleteUser import delete_user
 root = Tk()
 
 # Create the size of the widget
-root.geometry('500x500')
+root.geometry('550x550')
 
 # Using Frame to group UI to two sections, top and bottom
 topFrame= Frame(root)

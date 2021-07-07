@@ -74,6 +74,7 @@ def insertUser():
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
+    clearInsertUserEntries()
     updateTreeView()
 
 def insertTask():
@@ -124,6 +125,14 @@ def getUserDetails():
 def getAllTaskNames():
     taskDetailNamesList = get_task_detail_names()
     return taskDetailNamesList
+
+def clearInsertUserEntries():
+    firstName.set("")
+    lastName.set("")
+    emailAddress.set("")
+    phoneNumber.set("")
+    selectedDropDownTask.set("Select One")
+
 
 class InsertUser: 
     def __init__(self,master) :

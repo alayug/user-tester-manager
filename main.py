@@ -90,6 +90,7 @@ def insertTask():
         insert_task([newTaskList], append)
         message = "Task added successfully!"
     messagebox.showinfo(title=None, message=message)
+    clearInsertTaskEntry()
     updateTreeView()
 
 def deleteTask():
@@ -133,6 +134,8 @@ def clearInsertUserEntries():
     phoneNumber.set("")
     selectedDropDownTask.set("Select One")
 
+def clearInsertTaskEntry():
+    insertTaskName.set("")
 
 class InsertUser: 
     def __init__(self,master) :

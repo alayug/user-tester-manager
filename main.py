@@ -18,6 +18,7 @@ root = Tk()
 
 # Create the size of the widget
 root.geometry('550x550')
+root.title("User Tester Manager")
 
 # Using Frame to group UI to two sections, top and bottom
 topFrame= Frame(root)
@@ -258,7 +259,7 @@ class TreeView :
                 message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
 
-        deleteUserButton = Button(topFrame ,text="Delete", command=delete)
+        deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
         # Create all labels required for tasks.csv, using grid for organization
         deleteTaskLabel = Label(topFrame, text = "Password for Email")

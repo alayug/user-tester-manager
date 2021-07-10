@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from constants.mainConstants import FIRST_NAME
+from constants.mainConstants import FIRST_NAME, LAST_NAME
 from services.getTaskDetails import get_last_task_id, get_task_details, get_task_detail_names
 from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
@@ -183,7 +183,7 @@ class InsertUser:
         # Create all labels required for users.csv, using grid for organization
         insertUserTitle = Label(bottomFrame, text = "Add User", anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
         firstNameLabel = Label(bottomFrame, text = FIRST_NAME).grid(row = 1,column = 0)
-        lastNameLabel = Label(bottomFrame, text = "Last Name").grid(row = 2,column = 0)
+        lastNameLabel = Label(bottomFrame, text = LAST_NAME).grid(row = 2,column = 0)
         emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 3,column = 0)
         phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 4,column = 0)
         taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 0)
@@ -248,17 +248,17 @@ class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
         
-        tv['columns']=(FIRST_NAME, "Last Name", "Email Address", "Phone Number", "Task Name")
+        tv['columns']=(FIRST_NAME, LAST_NAME, "Email Address", "Phone Number", "Task Name")
         tv.column('#0', width=0, stretch=NO)
         tv.column(FIRST_NAME, anchor=CENTER, width=80)
-        tv.column("Last Name", anchor=CENTER, width=80)
+        tv.column(LAST_NAME, anchor=CENTER, width=80)
         tv.column("Email Address", anchor=CENTER, width=120)
         tv.column("Phone Number", anchor=CENTER, width=100)
         tv.column("Task Name", anchor=CENTER, width=80)
 
         tv.heading('#0', text='', anchor=CENTER)
         tv.heading(FIRST_NAME, text=FIRST_NAME, anchor=CENTER)
-        tv.heading("Last Name", text="Last Name", anchor=CENTER)
+        tv.heading(LAST_NAME, text=LAST_NAME, anchor=CENTER)
         tv.heading("Email Address", text="Email Address", anchor=CENTER)
         tv.heading("Phone Number", text="Phone Number", anchor=CENTER)
         tv.heading("Task Name", text="Task Name", anchor=CENTER)

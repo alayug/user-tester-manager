@@ -35,7 +35,7 @@ firstName = StringVar()
 lastName = StringVar()
 emailAddress = StringVar()
 phoneNumber = StringVar()
-selectedDropDownTask = StringVar(root)
+selectedInsertUserDropDownTask = StringVar(root)
 
 # Create all variables required for insertTask
 insertTaskName = StringVar()
@@ -57,6 +57,34 @@ taskDetailsList = get_task_details()
 # Create delete task drop down menu
 deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
 
+# Get list of task names
+taskNamesList = get_task_detail_names()
+# Create default dropdown menu
+insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTask, *taskNamesList)
+
+def updateDeleteTaskOptionMenu(deleteTaskOptionMenu): 
+    # Remove current delete task drop down
+    deleteTaskOptionMenu.destroy()
+    # Get newest list of task details
+    taskDetailsList = get_task_details()
+    
+    # Create new delete task drop down
+    deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
+    # Set newest delete task drop down at the previous drop down's location
+    deleteTaskOptionMenu.grid(row = 5,column = 9)
+    selectedDropDownDeleteTask.set("Select a task")
+
+def updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu): 
+    # Remove current insert user task drop down
+    insertUserTaskOptionMenu.destroy()
+    # Get newest list of task details
+    taskDetailsList = get_task_detail_names()
+    
+    # Create new insert user task drop down
+    insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTask, *taskDetailsList)
+    # Set newest insert user task drop down at the previous drop down's location
+    insertUserTaskOptionMenu.grid(row = 5,column = 1)
+    selectedInsertUserDropDownTask.set("Select One")
 
 def insertUser():
     # Validates every field in insertUser to ensure it meets criteria
@@ -74,11 +102,11 @@ def insertUser():
         message = emailAddressValidatorMessage
     elif phoneNumberValidatorMessage != "":
         message = phoneNumberValidatorMessage
-    elif selectedDropDownTask.get() =="Select One":
+    elif selectedInsertUserDropDownTask.get() =="Select One":
         message = "You must select a task from the task list!"
     else:
     # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedDropDownTask.get()]], 'a')
+        insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedInsertUserDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
     clearInsertUserEntries()
@@ -100,6 +128,7 @@ def insertTask():
     clearInsertTaskEntry()
     updateTreeView()
     updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
+    updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
 
 def deleteTask():
     # If no task has been selected from dropdown, throw a message
@@ -114,6 +143,8 @@ def deleteTask():
         delete_task(int(stringTaskId[1]))
         message = "Task was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
+    updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
+    updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
 
 def deleteUser(emailFromSelectedItemInTreeView):
     if emailFromSelectedItemInTreeView == "":
@@ -140,7 +171,7 @@ def clearInsertUserEntries():
     lastName.set("")
     emailAddress.set("")
     phoneNumber.set("")
-    selectedDropDownTask.set("Select One")
+    selectedInsertUserDropDownTask.set("Select One")
 
 def clearInsertTaskEntry():
     insertTaskName.set("")
@@ -162,30 +193,14 @@ class InsertUser:
         emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 3,column = 1)
         phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 4,column = 1)
 
-        # Get list of task names
-        taskNamesList = getAllTaskNames()
         # Set default value
-        selectedDropDownTask.set("Select One")
-        # Create default dropdown menu
-        OptionMenu(bottomFrame, selectedDropDownTask, *taskNamesList).grid(row = 5,column = 1)
-        
+        selectedInsertUserDropDownTask.set("Select One")
+       
+        insertUserTaskOptionMenu.grid(row = 5,column = 1)
         # button to trigger function to insert user data
         Button(bottomFrame ,text="Add User", command=insertUser).grid(row=6,column=1)
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
-
-
-
-def updateDeleteTaskOptionMenu(deleteTaskOptionMenu): 
-    # Remove current delete task drop down
-    deleteTaskOptionMenu.destroy()
-    # Get newest list of task details
-    taskDetailsList = get_task_details()
-    
-    # Create new delete task drop down
-    deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
-    # Set newest delete task drop down at the previous drop down's location
-    deleteTaskOptionMenu.grid(row = 5,column = 9)
 
 class InsertTask:
     def __init__(self, master):
@@ -213,7 +228,6 @@ class InsertTask:
 
         # button to trigger function to delete task data
         Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
-
 
 def updateTreeView():
     # Deletes all contents of treeview

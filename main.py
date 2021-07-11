@@ -245,6 +245,14 @@ def insertUserDetailsIntoTreeView():
         usersTreeview.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
         index +=1
 
+def insertTaskDetailsIntoTreeView():
+    index = 0
+
+    # Creates a row for each item in getUserDetails result list
+    for task in get_task_details():
+        tasksTreeview.insert(parent='', index=index, iid=index, text='', values=(task[0], task[1]))
+        index +=1
+
 class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
@@ -265,6 +273,17 @@ class TreeView :
         usersTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
 
         insertUserDetailsIntoTreeView()
+
+        tasksTreeview['columns']=("Task Id", "Task Name")
+        tasksTreeview.column('#0', width=0, stretch=NO)
+        tasksTreeview.column("Task Id", anchor=CENTER, width=80)
+        tasksTreeview.column("Task Name", anchor=CENTER, width=80)
+
+        tasksTreeview.heading('#0', text='', anchor=CENTER)
+        tasksTreeview.heading("Task Id", text="Task Id", anchor=CENTER)
+        tasksTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
+
+        insertTaskDetailsIntoTreeView()
 
         def delete():
             # Gets selected item index
@@ -310,6 +329,12 @@ class TreeView :
             deleteTaskLabel.pack_forget()
             deleteTaskEntry.pack_forget()
 
+        def showTasksTreeview():
+            tasksTreeview.pack()
+        
+        def hideTasksTreeview():
+            tasksTreeview.pack_forget()
+
         deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
         # Create all labels required for tasks.csv, using grid for organization
@@ -322,8 +347,7 @@ class TreeView :
         
         showUserButton.pack()
         hideUserButton.pack()
-        showUsersTreeview()
-        
+        showUsersTreeview()        
         
 treeView = TreeView(root)
 insertTask = InsertTask(root)

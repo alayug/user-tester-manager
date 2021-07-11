@@ -277,7 +277,7 @@ class TreeView :
         tasksTreeview['columns']=("Task Id", "Task Name")
         tasksTreeview.column('#0', width=0, stretch=NO)
         tasksTreeview.column("Task Id", anchor=CENTER, width=80)
-        tasksTreeview.column("Task Name", anchor=CENTER, width=80)
+        tasksTreeview.column("Task Name", anchor=CENTER, width=200)
 
         tasksTreeview.heading('#0', text='', anchor=CENTER)
         tasksTreeview.heading("Task Id", text="Task Id", anchor=CENTER)
@@ -315,12 +315,12 @@ class TreeView :
             messagebox.showinfo(title="Email Service", message=message)
         
         def showUsersTreeview():
+            hideTasksTreeview()   
             usersTreeview.pack()
             deleteUserButton.pack()
             sendEmailButton.pack()
             deleteTaskLabel.pack()
             deleteTaskEntry.pack()
-            
         
         def hideUsersTreeview():
             usersTreeview.pack_forget()
@@ -330,23 +330,24 @@ class TreeView :
             deleteTaskEntry.pack_forget()
 
         def showTasksTreeview():
+            hideUsersTreeview()
             tasksTreeview.pack()
         
         def hideTasksTreeview():
             tasksTreeview.pack_forget()
 
         deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
-        sendEmailButton = Button(topFrame ,text="Email User", command=email)
         # Create all labels required for tasks.csv, using grid for organization
         deleteTaskLabel = Label(topFrame, text = "Password for Email")
+        sendEmailButton = Button(topFrame ,text="Email User", command=email)
+
         # Create all entries required for tasks.csv
         deleteTaskEntry = Entry(topFrame, textvariable = password)
-        hideUserButton = Button(topFrame ,text="Hide User", command=hideUsersTreeview)
-        showUserButton = Button(topFrame ,text="Show User", command=showUsersTreeview)
+        showUsersTreeviewButton = Button(topFrame ,text="Display Users", command=showUsersTreeview)
+        showTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=showTasksTreeview)
 
-        
-        showUserButton.pack()
-        hideUserButton.pack()
+        showUsersTreeviewButton.pack()
+        showTasksTreeviewButton.pack()
         showUsersTreeview()        
         
 treeView = TreeView(root)

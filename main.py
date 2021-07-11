@@ -29,7 +29,8 @@ bottomFrame= Frame(root)
 bottomFrame.pack(side=BOTTOM, fill=BOTH)
 
 # Create treeview (table) for users
-tv = tkinter.ttk.Treeview(topFrame)
+usersTreeview = tkinter.ttk.Treeview(topFrame)
+tasksTreeview = tkinter.ttk.Treeview(topFrame)
 
 # Create all variables required for insertUsers
 firstName = StringVar()
@@ -232,7 +233,7 @@ class InsertTask:
 
 def updateTreeView():
     # Deletes all contents of treeview
-    tv.delete(*tv.get_children())
+    usersTreeview.delete(*usersTreeview.get_children())
     # Repopulate treeview with newest user details
     insertUserDetailsIntoTreeView()
 
@@ -241,58 +242,73 @@ def insertUserDetailsIntoTreeView():
 
     # Creates a row for each item in getUserDetails result list
     for user in getUserDetails():
-        tv.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
+        usersTreeview.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
         index +=1
 
 class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
         
-        tv['columns']=(FIRST_NAME, LAST_NAME, "Email Address", "Phone Number", "Task Name")
-        tv.column('#0', width=0, stretch=NO)
-        tv.column(FIRST_NAME, anchor=CENTER, width=80)
-        tv.column(LAST_NAME, anchor=CENTER, width=80)
-        tv.column("Email Address", anchor=CENTER, width=120)
-        tv.column("Phone Number", anchor=CENTER, width=100)
-        tv.column("Task Name", anchor=CENTER, width=80)
+        usersTreeview['columns']=(FIRST_NAME, LAST_NAME, "Email Address", "Phone Number", "Task Name")
+        usersTreeview.column('#0', width=0, stretch=NO)
+        usersTreeview.column(FIRST_NAME, anchor=CENTER, width=80)
+        usersTreeview.column(LAST_NAME, anchor=CENTER, width=80)
+        usersTreeview.column("Email Address", anchor=CENTER, width=120)
+        usersTreeview.column("Phone Number", anchor=CENTER, width=100)
+        usersTreeview.column("Task Name", anchor=CENTER, width=80)
 
-        tv.heading('#0', text='', anchor=CENTER)
-        tv.heading(FIRST_NAME, text=FIRST_NAME, anchor=CENTER)
-        tv.heading(LAST_NAME, text=LAST_NAME, anchor=CENTER)
-        tv.heading("Email Address", text="Email Address", anchor=CENTER)
-        tv.heading("Phone Number", text="Phone Number", anchor=CENTER)
-        tv.heading("Task Name", text="Task Name", anchor=CENTER)
+        usersTreeview.heading('#0', text='', anchor=CENTER)
+        usersTreeview.heading(FIRST_NAME, text=FIRST_NAME, anchor=CENTER)
+        usersTreeview.heading(LAST_NAME, text=LAST_NAME, anchor=CENTER)
+        usersTreeview.heading("Email Address", text="Email Address", anchor=CENTER)
+        usersTreeview.heading("Phone Number", text="Phone Number", anchor=CENTER)
+        usersTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
 
         insertUserDetailsIntoTreeView()
 
         def delete():
             # Gets selected item index
-            selectedItem = tv.selection()
-            if tv.item(selectedItem)['values']=="" :
+            selectedItem = usersTreeview.selection()
+            if usersTreeview.item(selectedItem)['values']=="" :
                 messagebox.showinfo(title=None, message="Please select a user to delete.")
             else:
                 # Using index, get the item and then the value at index 2 which equals to emailAddress
-                emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
+                emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
                 # Delete user from users.csv
                 deleteUser(emailFromSelectedItemInTreeView)
      
         def email():
             # Gets currently selected item's data
-            selectedItem = tv.selection()
+            selectedItem = usersTreeview.selection()
             # Retrieves password from password field
             passwordValue = password.get()
             if passwordValue == "":
                 message = "Please enter the password below before using the email service."
             # Prompt user to select a item in treeview if none is selected
-            elif tv.item(selectedItem)['values']=="" :
+            elif usersTreeview.item(selectedItem)['values']=="" :
                 message="Please select a user to delete." 
             else: 
-                firstNameFromSelectedItemInTreeView = tv.item(selectedItem)['values'][0]
-                emailFromSelectedItemInTreeView = tv.item(selectedItem)['values'][2]
-                taskNameFromSelectedItemInTreeView = tv.item(selectedItem)['values'][4]
+                firstNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][0]
+                emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
+                taskNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][4]
                 send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView)
                 message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
+        
+        def showUsersTreeview():
+            usersTreeview.pack()
+            deleteUserButton.pack()
+            sendEmailButton.pack()
+            deleteTaskLabel.pack()
+            deleteTaskEntry.pack()
+            
+        
+        def hideUsersTreeview():
+            usersTreeview.pack_forget()
+            deleteUserButton.pack_forget()
+            sendEmailButton.pack_forget()
+            deleteTaskLabel.pack_forget()
+            deleteTaskEntry.pack_forget()
 
         deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
@@ -300,12 +316,14 @@ class TreeView :
         deleteTaskLabel = Label(topFrame, text = "Password for Email")
         # Create all entries required for tasks.csv
         deleteTaskEntry = Entry(topFrame, textvariable = password)
+        hideUserButton = Button(topFrame ,text="Hide User", command=hideUsersTreeview)
+        showUserButton = Button(topFrame ,text="Show User", command=showUsersTreeview)
 
-        tv.pack()
-        deleteUserButton.pack()
-        sendEmailButton.pack()
-        deleteTaskLabel.pack()
-        deleteTaskEntry.pack()
+        
+        showUserButton.pack()
+        hideUserButton.pack()
+        showUsersTreeview()
+        
         
 treeView = TreeView(root)
 insertTask = InsertTask(root)

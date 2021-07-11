@@ -18,7 +18,7 @@ from services.deleteUser import delete_user
 root = Tk()
 
 # Create the size of the widget
-root.geometry('550x550')
+root.geometry('550x600')
 root.title("User Tester Manager")
 
 # Using Frame to group UI to two sections, top and bottom
@@ -314,8 +314,7 @@ class TreeView :
                 message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
         
-        def showUsersTreeview():
-            hideTasksTreeview()   
+        def displayUsersTreeview(): 
             usersTreeview.pack()
             deleteUserButton.pack()
             sendEmailButton.pack()
@@ -329,12 +328,19 @@ class TreeView :
             deleteTaskLabel.pack_forget()
             deleteTaskEntry.pack_forget()
 
-        def showTasksTreeview():
-            hideUsersTreeview()
+        def displayTasksTreeview():
             tasksTreeview.pack()
         
         def hideTasksTreeview():
             tasksTreeview.pack_forget()
+
+        def displayUsersButtonAction():
+            hideTasksTreeview()
+            displayUsersTreeview()
+
+        def displayTasksButtonAction():
+            hideUsersTreeview()
+            displayTasksTreeview()
 
         deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
         # Create all labels required for tasks.csv, using grid for organization
@@ -343,12 +349,12 @@ class TreeView :
 
         # Create all entries required for tasks.csv
         deleteTaskEntry = Entry(topFrame, textvariable = password)
-        showUsersTreeviewButton = Button(topFrame ,text="Display Users", command=showUsersTreeview)
-        showTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=showTasksTreeview)
+        displayUsersTreeviewButton = Button(topFrame ,text="Display Users", command=displayUsersButtonAction)
+        displayTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=displayTasksButtonAction)
 
-        showUsersTreeviewButton.pack()
-        showTasksTreeviewButton.pack()
-        showUsersTreeview()        
+        displayUsersTreeviewButton.pack()
+        displayTasksTreeviewButton.pack()
+        displayUsersTreeview()        
         
 treeView = TreeView(root)
 insertTask = InsertTask(root)

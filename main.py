@@ -292,10 +292,13 @@ class TreeView :
             if usersTreeview.item(selectedItem)['values']=="" :
                 messagebox.showinfo(title=None, message="Please select a user to delete.")
             else:
-                # Using index, get the item and then the value at index 2 which equals to emailAddress
-                emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
-                # Delete user from users.csv
-                deleteUser(emailFromSelectedItemInTreeView)
+                answer = messagebox.askyesno(title='Delete User Confirmation',
+                    message='Are you sure that you want to delete the user?')
+                if answer:
+                    # Using index, get the item and then the value at index 2 which equals to emailAddress
+                    emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
+                    # Delete user from users.csv
+                    deleteUser(emailFromSelectedItemInTreeView)
      
         def email():
             # Gets currently selected item's data

@@ -17,3 +17,6 @@ class InsertUserValidatorTestCase(unittest.TestCase):
         result = firstNameValidator("invalid name")
         self.assertEqual(result, "First name must only contain letters!")
 
+if __name__=="__main__":
+    print()
+    unittest.main()

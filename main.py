@@ -1,20 +1,14 @@
 #!/usr/bin/python
 from constants.mainConstants import FIRST_NAME, LAST_NAME
-from services.getTaskDetails import get_last_task_id, get_task_details, get_task_detail_names
+from services.dataService import *
 from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
 from services.emailService import send_email
-from services.getUserDetails import get_user_details
 from tkinter import *
 from tkinter import messagebox
 import tkinter.font as tkFont
 import tkinter.ttk 
 from constants.insertTaskConstants import append
-from services.insertUser import insert_user
-from services.insertTask import insert_task
-from services.deleteTask import delete_task
-from services.deleteUser import delete_user
-
 
 #
 # Callbacks for 

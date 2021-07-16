@@ -67,7 +67,7 @@ def insertUser():
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
     clearInsertUserEntries()
-    updateTreeView()
+    updateUsersTreeView()
 
 def insertTask():
     taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
@@ -83,9 +83,10 @@ def insertTask():
         message = "Task added successfully!"
     messagebox.showinfo(title=None, message=message)
     clearInsertTaskEntry()
-    updateTreeView()
+    updateUsersTreeView()
     updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+    updateTasksTreeView()
 
 def deleteTask():
     # If no task has been selected from dropdown, throw a message
@@ -102,6 +103,7 @@ def deleteTask():
     messagebox.showinfo(title=None, message=message)
     updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+    updateTasksTreeView()
 
 def deleteUser(emailFromSelectedItemInTreeView):
     if emailFromSelectedItemInTreeView == "":
@@ -111,7 +113,7 @@ def deleteUser(emailFromSelectedItemInTreeView):
         delete_user(emailFromSelectedItemInTreeView)
         message = "User was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
-    updateTreeView()
+    updateUsersTreeView()
 
 # Returns a list of user details
 def getUserDetails():
@@ -186,11 +188,17 @@ class InsertTask:
         # button to trigger function to delete task data
         Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
 
-def updateTreeView():
+def updateUsersTreeView():
     # Deletes all contents of treeview
     usersTreeview.delete(*usersTreeview.get_children())
     # Repopulate treeview with newest user details
     insertUserDetailsIntoTreeView()
+
+def updateTasksTreeView():
+    # Deletes all contents of treeview
+    tasksTreeview.delete(*tasksTreeview.get_children())
+    # Repopulate treeview with newest task details
+    insertTaskDetailsIntoTreeView()
 
 def insertUserDetailsIntoTreeView():
     index = 0

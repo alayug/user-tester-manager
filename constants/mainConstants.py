@@ -1,2 +1,7 @@
 FIRST_NAME = "First Name"
 LAST_NAME = "Last Name"
+EMAIL_ADDRESS = "Email Address"
+PHONE_NUMBER = "Phone Number"
+TASK_NAME = "Task Name"
+TASK_ID = "Task Id"
+ADD_USER = "Add User"

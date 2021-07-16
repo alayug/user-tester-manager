@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from constants.mainConstants import FIRST_NAME, LAST_NAME
+from constants.mainConstants import ADD_USER, EMAIL_ADDRESS, FIRST_NAME, LAST_NAME, PHONE_NUMBER, TASK_ID, TASK_NAME
 from services.dataService import *
 from validators.insertTaskValidator import taskNameValidator
 from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
@@ -133,11 +133,11 @@ class InsertUser:
     def __init__(self,master) :
         ###### USER UI #######
         # Create all labels required for users.csv, using grid for organization
-        insertUserTitle = Label(bottomFrame, text = "Add User", anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
+        insertUserTitle = Label(bottomFrame, text = ADD_USER, anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
         firstNameLabel = Label(bottomFrame, text = FIRST_NAME).grid(row = 1,column = 0)
         lastNameLabel = Label(bottomFrame, text = LAST_NAME).grid(row = 2,column = 0)
-        emailAddressLabel = Label(bottomFrame, text = "Email Address").grid(row = 3,column = 0)
-        phoneNumberLabel = Label(bottomFrame, text = "Phone Number").grid(row = 4,column = 0)
+        emailAddressLabel = Label(bottomFrame, text = EMAIL_ADDRESS).grid(row = 3,column = 0)
+        phoneNumberLabel = Label(bottomFrame, text = PHONE_NUMBER).grid(row = 4,column = 0)
         taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 0)
 
         # Create all entries required for users.csv
@@ -151,7 +151,7 @@ class InsertUser:
        
         insertUserTaskOptionMenu.grid(row = 5,column = 1)
         # button to trigger function to insert user data
-        Button(bottomFrame ,text="Add User", command=insertUser).grid(row=6,column=1)
+        Button(bottomFrame ,text=ADD_USER, command=insertUser).grid(row=6,column=1)
 
         tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
 
@@ -160,7 +160,7 @@ class InsertTask:
         ###### INSERT TASK UI #######
         # Create all labels required for tasks.csv, using grid for organization
         addTaskTitle = Label(bottomFrame, text = "Add Task", font=tkFont.Font(size=16)).grid(row = 0,column = 9)
-        taskNameLabel = Label(bottomFrame, text = "Task Name").grid(row = 1,column = 8)
+        taskNameLabel = Label(bottomFrame, text = TASK_NAME).grid(row = 1,column = 8)
 
         # Create all entries required for tasks.csv
         taskNameEntry = Entry(bottomFrame, textvariable = insertTaskName).grid(row = 1,column = 9)
@@ -235,31 +235,31 @@ class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
         
-        usersTreeview['columns']=(FIRST_NAME, LAST_NAME, "Email Address", "Phone Number", "Task Name")
+        usersTreeview['columns']=(FIRST_NAME, LAST_NAME, EMAIL_ADDRESS, PHONE_NUMBER, TASK_NAME)
         usersTreeview.column('#0', width=0, stretch=NO)
         usersTreeview.column(FIRST_NAME, anchor=CENTER, width=80)
         usersTreeview.column(LAST_NAME, anchor=CENTER, width=80)
-        usersTreeview.column("Email Address", anchor=CENTER, width=120)
-        usersTreeview.column("Phone Number", anchor=CENTER, width=100)
-        usersTreeview.column("Task Name", anchor=CENTER, width=80)
+        usersTreeview.column(EMAIL_ADDRESS, anchor=CENTER, width=120)
+        usersTreeview.column(PHONE_NUMBER, anchor=CENTER, width=100)
+        usersTreeview.column(TASK_NAME, anchor=CENTER, width=80)
 
         usersTreeview.heading('#0', text='', anchor=CENTER)
         usersTreeview.heading(FIRST_NAME, text=FIRST_NAME, anchor=CENTER)
         usersTreeview.heading(LAST_NAME, text=LAST_NAME, anchor=CENTER)
-        usersTreeview.heading("Email Address", text="Email Address", anchor=CENTER)
-        usersTreeview.heading("Phone Number", text="Phone Number", anchor=CENTER)
-        usersTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
+        usersTreeview.heading(EMAIL_ADDRESS, text=EMAIL_ADDRESS, anchor=CENTER)
+        usersTreeview.heading(PHONE_NUMBER, text=PHONE_NUMBER, anchor=CENTER)
+        usersTreeview.heading(TASK_NAME, text=TASK_NAME, anchor=CENTER)
 
         insertUserDetailsIntoTreeView()
 
-        tasksTreeview['columns']=("Task Id", "Task Name")
+        tasksTreeview['columns']=(TASK_ID, TASK_NAME)
         tasksTreeview.column('#0', width=0, stretch=NO)
-        tasksTreeview.column("Task Id", anchor=CENTER, width=80)
-        tasksTreeview.column("Task Name", anchor=CENTER, width=200)
+        tasksTreeview.column(TASK_ID, anchor=CENTER, width=80)
+        tasksTreeview.column(TASK_NAME, anchor=CENTER, width=200)
 
         tasksTreeview.heading('#0', text='', anchor=CENTER)
-        tasksTreeview.heading("Task Id", text="Task Id", anchor=CENTER)
-        tasksTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
+        tasksTreeview.heading(TASK_ID, text=TASK_ID, anchor=CENTER)
+        tasksTreeview.heading(TASK_NAME, text=TASK_NAME, anchor=CENTER)
 
         insertTaskDetailsIntoTreeView()
 

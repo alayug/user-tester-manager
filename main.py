@@ -15,56 +15,10 @@ from services.insertTask import insert_task
 from services.deleteTask import delete_task
 from services.deleteUser import delete_user
 
-root = Tk()
 
-# Create the size of the widget
-root.geometry('550x600')
-root.title("User Tester Manager")
-
-# Using Frame to group UI to two sections, top and bottom
-topFrame= Frame(root)
-topFrame.pack(side=TOP, fill=BOTH, expand=True)
-
-bottomFrame= Frame(root)
-bottomFrame.pack(side=BOTTOM, fill=BOTH)
-bottomFrame.place(anchor="c", relx=.45, rely=.8)
-
-# Create treeview (table) for users
-usersTreeview = tkinter.ttk.Treeview(topFrame)
-tasksTreeview = tkinter.ttk.Treeview(topFrame)
-
-# Create all variables required for insertUsers
-firstName = StringVar()
-lastName = StringVar()
-emailAddress = StringVar()
-phoneNumber = StringVar()
-selectedInsertUserDropDownTask = StringVar(root)
-
-# Create all variables required for insertTask
-insertTaskName = StringVar()
-
-# Create all variables required for deleteTask 
-selectedDropDownDeleteTask = StringVar()
-
-# Message/Alert box message holder
-message = ""
-
-# Email from the selected item in treeview
-emailFromSelectedItemInTreeView =""
-
-# Password for email service
-password = StringVar()
-
-# Get list of all the tasks
-taskDetailsList = get_task_details()
-# Create delete task drop down menu
-deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
-
-# Get list of task names
-taskNamesList = get_task_detail_names()
-# Create default dropdown menu
-insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTask, *taskNamesList)
-
+#
+# Callbacks for 
+#
 def updateDeleteTaskOptionMenu(deleteTaskOptionMenu): 
     # Remove current delete task drop down
     deleteTaskOptionMenu.destroy()
@@ -254,6 +208,27 @@ def insertTaskDetailsIntoTreeView():
         tasksTreeview.insert(parent='', index=index, iid=index, text='', values=(task[0], task[1]))
         index +=1
 
+# CH example of how to manipulate a row that got a 2x click
+def edit_task(event, *args):
+
+        tview = event.widget # the TreeView widget on which we 2x clicked a row on
+        row_id = event.widget.focus() # row id that was 2x clicked on
+        values = event.widget.item(row_id)["values"] # the list of values in a row
+
+        print(values) # show 2x clicked row content
+ 
+        # Here you would pop up a dialog with text fields that show the current values
+        # for this row and that can be edited. On OK, you would delete the current row
+        # and re-create (insert) it with the new values from the dialog 
+
+        # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
+        new_text = "This is a user edited task name" # this is what we would get back from the dialog
+        
+        new_values = [values[0], new_text] # here I keep the old Task Id
+        tview.delete(row_id) # delete current row and insert again with new values
+        tview.insert("", row_id, values=new_values) # overwrite current row with modified values list
+
+
 class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
@@ -285,6 +260,9 @@ class TreeView :
         tasksTreeview.heading("Task Name", text="Task Name", anchor=CENTER)
 
         insertTaskDetailsIntoTreeView()
+
+        # CH callback for left mouse button double click on a row of this treeview widget
+        tasksTreeview.bind("<Double-1>", edit_task)
 
         def delete():
             # Gets selected item index
@@ -361,7 +339,64 @@ class TreeView :
         displayUsersTreeviewButton.pack()
         displayTasksTreeviewButton.pack()
         displayUsersTreeview()        
-        
+
+#
+# MAIN
+#
+
+
+root = Tk()
+
+# Create the size of the widget
+root.geometry('550x600')
+root.title("User Tester Manager")
+
+# Using Frame to group UI to two sections, top and bottom
+topFrame= Frame(root)
+topFrame.pack(side=TOP, fill=BOTH, expand=True)
+
+bottomFrame= Frame(root)
+bottomFrame.pack(side=BOTTOM, fill=BOTH)
+bottomFrame.place(anchor="c", relx=.45, rely=.8)
+
+# Create treeview (table) for users
+usersTreeview = tkinter.ttk.Treeview(topFrame)
+tasksTreeview = tkinter.ttk.Treeview(topFrame)
+
+# Create all variables required for insertUsers
+firstName = StringVar()
+lastName = StringVar()
+emailAddress = StringVar()
+phoneNumber = StringVar()
+selectedInsertUserDropDownTask = StringVar(root)
+
+# Create all variables required for insertTask
+insertTaskName = StringVar()
+
+# Create all variables required for deleteTask 
+selectedDropDownDeleteTask = StringVar()
+
+# Message/Alert box message holder
+message = ""
+
+# Email from the selected item in treeview
+emailFromSelectedItemInTreeView =""
+
+# Password for email service
+password = StringVar()
+
+# Get list of all the tasks
+taskDetailsList = get_task_details()
+# Create delete task drop down menu
+deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
+
+# Get list of task names
+taskNamesList = get_task_detail_names()
+# Create default dropdown menu
+insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTask, *taskNamesList)
+
+
+# create Treeview widgets
 treeView = TreeView(root)
 insertTask = InsertTask(root)
 insertUser = InsertUser(root)

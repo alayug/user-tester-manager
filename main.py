@@ -1,14 +1,14 @@
 #!/usr/bin/python
-from constants.mainConstants import ADD_USER, EMAIL_ADDRESS, FIRST_NAME, LAST_NAME, PHONE_NUMBER, TASK_ID, TASK_NAME
-from services.dataService import *
-from validators.insertTaskValidator import taskNameValidator
-from validators.insertUserValidator import emailValidator, firstNameValidator, lastNameValidator, phoneNumberValidator
-from services.emailService import send_email
 from tkinter import *
 from tkinter import messagebox
 import tkinter.font as tkFont
 import tkinter.ttk 
+from constants.mainConstants import *
 from constants.insertTaskConstants import append
+from validators.insertTaskValidator import *
+from validators.insertUserValidator import *
+from services.emailService import send_email
+from services.dataService import *
 
 #
 # Callbacks for 

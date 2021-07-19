@@ -1,14 +1,52 @@
 #!/usr/bin/python
 from tkinter import *
 from tkinter import messagebox
+from tkinter import simpledialog
 import tkinter.font as tkFont
-import tkinter.ttk 
+import tkinter.ttk
 from constants.mainConstants import *
 from constants.insertTaskConstants import append
 from validators.insertTaskValidator import *
 from validators.insertUserValidator import *
 from services.emailService import send_email
 from services.dataService import *
+
+class SimpleDialog():
+    
+    def __init__(self):
+        super().__init__()
+        # self allow the variable to be used anywhere in the class
+        self.output1 = ""
+        self.output2 = ""
+        self.initUI()
+
+    def initUI(self):
+        window = Toplevel()
+
+        lbl1 = Label(window, text="Input 1", width=6)
+        lbl1.pack(side=LEFT, padx=5, pady=10)
+
+        self.entry1 = Entry(window, textvariable=self.output1)
+        self.entry1.pack(fill=X, padx=5, expand=True)
+
+        lbl2 = Label(window, text="Input 2", width=6)
+        lbl2.pack(side=LEFT, padx=5, pady=10)
+
+        self.entry2 = Entry(window)
+        self.entry2.pack(fill=X, padx=5, expand=True)
+
+
+        # Command tells the form what to do when the button is clicked
+        btn = Button(window, text="Submit", command=self.onSubmit)
+        btn.pack(padx=5, pady=10)
+
+    def onSubmit(self):
+
+        self.output1 = self.entry1.get()
+        self.output2 = self.entry2.get()
+        user_input = (self.output1, self.output2)
+        print("user input", user_input)
+        self.destroy()
 
 #
 # Callbacks for 
@@ -209,6 +247,11 @@ def insertTaskDetailsIntoTreeView():
     for task in get_task_details():
         tasksTreeview.insert(parent='', index=index, iid=index, text='', values=(task[0], task[1]))
         index +=1
+        
+
+def showDialog():
+    popup = SimpleDialog()
+    
 
 # CH example of how to manipulate a row that got a 2x click
 def edit_task(event, *args):
@@ -222,6 +265,7 @@ def edit_task(event, *args):
         # Here you would pop up a dialog with text fields that show the current values
         # for this row and that can be edited. On OK, you would delete the current row
         # and re-create (insert) it with the new values from the dialog 
+        showDialog()
 
         # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
         new_text = "This is a user edited task name" # this is what we would get back from the dialog
@@ -230,7 +274,7 @@ def edit_task(event, *args):
         tview.delete(row_id) # delete current row and insert again with new values
         tview.insert("", row_id, values=new_values) # overwrite current row with modified values list
 
-
+        
 class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########

@@ -1,14 +1,14 @@
 import smtplib
 from email.message import EmailMessage
 
-def send_email(email, password, firstName, taskName):
+def send_email(email, password, firstName, taskName, dateAndTimeToCompleteBy, additionalDetails):
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
     sender_email = "alianapythonclass@gmail.com" 
 
     msg = EmailMessage()
     # Set the body/message of your email
-    msg.set_content('Hello %s,\n\nThis is a reminder to complete the following task:\n\nTask - %s' % (firstName, taskName))
+    msg.set_content('Hello %s,\n\nThis is a reminder to complete the following task by %s:\n\nTask - %s\n\nAdditional Details: \n%s' % (firstName, dateAndTimeToCompleteBy, taskName,additionalDetails))
 
     msg['Subject'] = 'Python User Tester Manager'
     msg['From'] = sender_email

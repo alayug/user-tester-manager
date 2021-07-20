@@ -19,10 +19,9 @@ class SimpleDialog():
         self.output1 = ""
         self.output2 = ""
         self.initUI()
-
+        
     def initUI(self):
         window = Toplevel()
-
         lbl1 = Label(window, text="Input 1", width=6)
         lbl1.pack(side=LEFT, padx=5, pady=10)
 
@@ -46,7 +45,7 @@ class SimpleDialog():
         self.output2 = self.entry2.get()
         user_input = (self.output1, self.output2)
         print("user input", user_input)
-        self.destroy()
+        self.window.destroy()
 
 #
 # Callbacks for 
@@ -338,8 +337,13 @@ class TreeView :
                 firstNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][0]
                 emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
                 taskNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][4]
-                send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView)
-                message = "Email Sent!"
+                dateAndTimeToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the date and time you want the user to complete task by:", initialvalue="")
+                if(dateAndTimeToCompleteBy is None):
+                    message = "Please enter a date/time the user must complete their task by."
+                elif(dateAndTimeToCompleteBy is not None):
+                    additionalDetails = simpledialog.askstring(title = "Additional Details", prompt = "Additional details for the user (optional)", initialvalue="")
+                    send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView,dateAndTimeToCompleteBy,additionalDetails)
+                    message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
         
         def displayUsersTreeview(): 

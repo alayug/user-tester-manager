@@ -332,17 +332,20 @@ class TreeView :
                 message = "Please enter the password below before using the email service."
             # Prompt user to select a item in treeview if none is selected
             elif usersTreeview.item(selectedItem)['values']=="" :
-                message="Please select a user to delete." 
+                message="Please select a user to email." 
             else: 
                 firstNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][0]
                 emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
                 taskNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][4]
-                dateAndTimeToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the date and time you want the user to complete task by:", initialvalue="")
-                if(dateAndTimeToCompleteBy is None):
-                    message = "Please enter a date/time the user must complete their task by."
-                elif(dateAndTimeToCompleteBy is not None):
-                    additionalDetails = simpledialog.askstring(title = "Additional Details", prompt = "Additional details for the user (optional)", initialvalue="")
-                    send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView,dateAndTimeToCompleteBy,additionalDetails)
+                dateToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the date you want the user to complete the task by:", initialvalue="")
+                timeToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the time you want the user to complete the task by:", initialvalue="")
+                if(dateToCompleteBy == ""):
+                    message = "Please enter a date the user must complete their task by."
+                elif(timeToCompleteBy == ""):
+                    message = "Please enter a time the user must complete their task by."
+                else:
+                    additionalDetails = simpledialog.askstring(title = "Additional Details", prompt = "Additional details for the user (optional)", initialvalue="N/A")
+                    send_email(emailFromSelectedItemInTreeView, passwordValue, firstNameFromSelectedItemInTreeView, taskNameFromSelectedItemInTreeView,dateToCompleteBy, timeToCompleteBy, additionalDetails)
                     message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
         

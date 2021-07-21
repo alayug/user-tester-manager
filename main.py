@@ -205,19 +205,6 @@ class InsertTask:
         # button to trigger function to add task data
         Button(bottomFrame ,text="Add Task", command=insertTask).grid(row=2,column=9)
 
-        ###### DELETE TASK UI #######
-        # Get all tasks to populate
-        
-        deleteTaskTitle = Label(bottomFrame, text = "Delete Task", font=tkFont.Font(size=16)).grid(row = 4,column = 9)
-        # Create all labels required for tasks.csv, using grid for organization
-        deleteTaskLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 8)
-
-        selectedDropDownDeleteTask.set("Select a task")
-        # Set delete task drop down menu at certain grid location
-        deleteTaskOptionMenu.grid(row = 5,column = 9)
-
-        # button to trigger function to delete task data
-        Button(bottomFrame ,text="Delete Task", command=deleteTask).grid(row=6,column=9)
 
 def updateUsersTreeView():
     # Deletes all contents of treeview
@@ -309,7 +296,7 @@ class TreeView :
         # CH callback for left mouse button double click on a row of this treeview widget
         tasksTreeview.bind("<Double-1>", edit_task)
 
-        def delete():
+        def deleteUserThroughTreeview():
             # Gets selected item index
             selectedItem = usersTreeview.selection()
             if usersTreeview.item(selectedItem)['values']=="" :
@@ -322,6 +309,24 @@ class TreeView :
                     emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
                     # Delete user from users.csv
                     deleteUser(emailFromSelectedItemInTreeView)
+
+        def deleteTaskThroughTreeview():
+            # Gets selected item index
+            selectedItem = tasksTreeview.selection()
+            if tasksTreeview.item(selectedItem)['values']=="" :
+                messagebox.showinfo(title=None, message="Please select a task to delete.")
+            else:
+                answer = messagebox.askyesno(title='Delete Task Confirmation',
+                    message='Are you sure that you want to delete the task?')
+                if answer:
+                    # Using index, get the item and then the value at index 2 which equals to emailAddress
+                    taskIdFromSelectedItemInTreeView = tasksTreeview.item(selectedItem)['values'][0]
+                    # Delete user from users.csv
+                    delete_task(taskIdFromSelectedItemInTreeView)
+                    updateTasksTreeView()
+                    updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+                    messagebox.showinfo(title=None, message="Task deleted successfully!")
+                    
      
         def email():
             # Gets currently selected item's data
@@ -365,9 +370,11 @@ class TreeView :
 
         def displayTasksTreeview():
             tasksTreeview.pack()
+            deleteTaskButton.pack()
         
         def hideTasksTreeview():
             tasksTreeview.pack_forget()
+            deleteTaskButton.pack_forget()
 
         def displayUsersButtonAction():
             hideTasksTreeview()
@@ -377,12 +384,14 @@ class TreeView :
             hideUsersTreeview()
             displayTasksTreeview()
 
-        deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
-        # Create all labels required for tasks.csv, using grid for organization
+        deleteUserButton = Button(topFrame ,text="Delete User", command=deleteUserThroughTreeview)
+        # Create all labels and entries button required for Users Treeview
         emailPasswordLabel = Label(topFrame, text = "Password for Email")
-        # Create all entries required for tasks.csv
         emailPasswordEntry = Entry(topFrame, textvariable = password)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
+
+        # Create button to delete task
+        deleteTaskButton = Button(topFrame ,text="Delete Task", command=deleteTaskThroughTreeview)
 
         displayUsersTreeviewButton = Button(topFrame ,text="Display Users", command=displayUsersButtonAction)
         displayTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=displayTasksButtonAction)
@@ -420,6 +429,7 @@ lastName = StringVar()
 emailAddress = StringVar()
 phoneNumber = StringVar()
 selectedInsertUserDropDownTask = StringVar(root)
+selectedTaskTreeviewItem = StringVar()
 
 # Create all variables required for insertTask
 insertTaskName = StringVar()

@@ -352,15 +352,15 @@ class TreeView :
         def displayUsersTreeview(): 
             usersTreeview.pack()
             deleteUserButton.pack()
-            deleteTaskLabel.pack()
-            deleteTaskEntry.pack()
+            emailPasswordLabel.pack()
+            emailPasswordEntry.pack()
             sendEmailButton.pack()
         
         def hideUsersTreeview():
             usersTreeview.pack_forget()
             deleteUserButton.pack_forget()            
-            deleteTaskLabel.pack_forget()
-            deleteTaskEntry.pack_forget()
+            emailPasswordLabel.pack_forget()
+            emailPasswordEntry.pack_forget()
             sendEmailButton.pack_forget()
 
         def displayTasksTreeview():
@@ -379,12 +379,10 @@ class TreeView :
 
         deleteUserButton = Button(topFrame ,text="Delete User", command=delete)
         # Create all labels required for tasks.csv, using grid for organization
-        deleteTaskLabel = Label(topFrame, text = "Password for Email")
+        emailPasswordLabel = Label(topFrame, text = "Password for Email")
         # Create all entries required for tasks.csv
-        deleteTaskEntry = Entry(topFrame, textvariable = password)
+        emailPasswordEntry = Entry(topFrame, textvariable = password)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
-
-
 
         displayUsersTreeviewButton = Button(topFrame ,text="Display Users", command=displayUsersButtonAction)
         displayTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=displayTasksButtonAction)

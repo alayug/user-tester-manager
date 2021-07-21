@@ -251,14 +251,15 @@ def edit_task(event, *args):
         # Here you would pop up a dialog with text fields that show the current values
         # for this row and that can be edited. On OK, you would delete the current row
         # and re-create (insert) it with the new values from the dialog 
-        showDialog()
+        # showDialog() // customer multi input  popup - IN PROGRESSS
 
         # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
-        new_text = "This is a user edited task name" # this is what we would get back from the dialog
+        newTaskName = simpledialog.askstring("Edit Task Name", "Please enter the new task name:", initialvalue=values[1])
         
-        new_values = [values[0], new_text] # here I keep the old Task Id
-        tview.delete(row_id) # delete current row and insert again with new values
-        tview.insert("", row_id, values=new_values) # overwrite current row with modified values list
+        update_task(values[0], newTaskName)
+        updateTasksTreeView()
+        updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+        messagebox.showinfo(title=None, message="Task updated successfully!")
 
         
 class TreeView :

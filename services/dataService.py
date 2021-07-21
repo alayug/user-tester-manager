@@ -32,7 +32,9 @@ def update_task(taskId, taskName):
     for task in currentTaskList:
         # if the row (task[0] = taskId) in tasks.csv does not match the taskId parameter, add to newTaskList
         if int(task[0]) == taskId:
-            newTaskList.append(taskId, taskName)
+            newTaskList.append([taskId, taskName])
+        else:
+            newTaskList.append(task)
     
     # replace everything in current tasks.csv with newTaskList by passing in 'w' as second parameter
     insert_task(newTaskList,'w')

@@ -255,11 +255,13 @@ def edit_task(event, *args):
 
         # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
         newTaskName = simpledialog.askstring("Edit Task Name", "Please enter the new task name:", initialvalue=values[1])
-        
-        update_task(values[0], newTaskName)
-        updateTasksTreeView()
-        updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
-        messagebox.showinfo(title=None, message="Task updated successfully!")
+        if(newTaskName.isspace() == True or newTaskName == ""):
+            messagebox.showinfo(title=None, message="You must enter a task name!")
+        else:
+            update_task(values[0], newTaskName)
+            updateTasksTreeView()
+            updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+            messagebox.showinfo(title=None, message="Task updated successfully!")
 
         
 class TreeView :

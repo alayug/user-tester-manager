@@ -50,18 +50,6 @@ class SimpleDialog():
 #
 # Callbacks for 
 #
-def updateDeleteTaskOptionMenu(deleteTaskOptionMenu): 
-    # Remove current delete task drop down
-    deleteTaskOptionMenu.destroy()
-    # Get newest list of task details
-    taskDetailsList = get_task_details()
-    
-    # Create new delete task drop down
-    deleteTaskOptionMenu = OptionMenu(bottomFrame, selectedDropDownDeleteTask, *taskDetailsList)
-    # Set newest delete task drop down at the previous drop down's location
-    deleteTaskOptionMenu.grid(row = 5,column = 9)
-    selectedDropDownDeleteTask.set("Select a task")
-
 def updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu): 
     # Remove current insert user task drop down
     insertUserTaskOptionMenu.destroy()
@@ -116,7 +104,6 @@ def insertTask():
     messagebox.showinfo(title=None, message=message)
     clearInsertTaskEntry()
     updateUsersTreeView()
-    updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
     updateTasksTreeView()
 
@@ -133,7 +120,6 @@ def deleteTask():
         delete_task(int(stringTaskId[1]))
         message = "Task was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
-    updateDeleteTaskOptionMenu(deleteTaskOptionMenu)
     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
     updateTasksTreeView()
 

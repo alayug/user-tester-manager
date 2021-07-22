@@ -101,14 +101,15 @@ def insertUser():
     updateUsersTreeView()
 
 def insertTask():
-    taskNameValidatorMessage = taskNameValidator(insertTaskName.get())
+    taskNameInput = simpledialog.askstring(title="Add New Task", prompt="Enter the task name: ", initialvalue="")
+    taskNameValidatorMessage = taskNameValidator(taskNameInput)
     # Validation check on fields to ensure it is not empty
     if taskNameValidatorMessage !="":
         message = taskNameValidatorMessage
     else:
         # Get the most recent task id number and add 1 to create next task id
         nextTaskId = int(get_last_task_id()) + 1
-        newTaskList = [nextTaskId, insertTaskName.get()]
+        newTaskList = [nextTaskId, taskNameInput]
         # execute insert_task function. Retrieving the entry data by invoking get() on the variables
         insert_task([newTaskList], append)
         message = "Task added successfully!"
@@ -189,22 +190,6 @@ class InsertUser:
         insertUserTaskOptionMenu.grid(row = 5,column = 1)
         # button to trigger function to insert user data
         Button(bottomFrame ,text=ADD_USER, command=insertUser).grid(row=6,column=1)
-
-        tkinter.ttk.Separator(bottomFrame, orient=VERTICAL).grid( row=0, column = 6, rowspan=50, sticky='ns')
-
-class InsertTask:
-    def __init__(self, master):
-        ###### INSERT TASK UI #######
-        # Create all labels required for tasks.csv, using grid for organization
-        addTaskTitle = Label(bottomFrame, text = "Add Task", font=tkFont.Font(size=16)).grid(row = 0,column = 9)
-        taskNameLabel = Label(bottomFrame, text = TASK_NAME).grid(row = 1,column = 8)
-
-        # Create all entries required for tasks.csv
-        taskNameEntry = Entry(bottomFrame, textvariable = insertTaskName).grid(row = 1,column = 9)
-
-        # button to trigger function to add task data
-        Button(bottomFrame ,text="Add Task", command=insertTask).grid(row=2,column=9)
-
 
 def updateUsersTreeView():
     # Deletes all contents of treeview
@@ -373,10 +358,12 @@ class TreeView :
 
         def displayTasksTreeview():
             tasksTreeview.pack()
+            addTaskButton.pack()
             deleteTaskButton.pack()
         
         def hideTasksTreeview():
             tasksTreeview.pack_forget()
+            addTaskButton.pack_forget()
             deleteTaskButton.pack_forget()
 
         def displayUsersButtonAction():
@@ -393,6 +380,8 @@ class TreeView :
         emailPasswordEntry = Entry(topFrame, textvariable = password)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
 
+        # Create button to add task
+        addTaskButton = Button(topFrame ,text="Add Task", command=insertTask)
         # Create button to delete task
         deleteTaskButton = Button(topFrame ,text="Delete Task", command=deleteTaskThroughTreeview)
 

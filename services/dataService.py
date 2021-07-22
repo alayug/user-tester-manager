@@ -39,6 +39,22 @@ def update_task(taskId, taskName):
     # replace everything in current tasks.csv with newTaskList by passing in 'w' as second parameter
     insert_task(newTaskList,'w')
 
+def update_user(oldEmail, newEmail):
+    # get all the current users in csv
+    currentUsersTaskList = get_user_details()
+    # list to store the new data that will write over the current tasks.csv file
+    newUserList = []
+
+    for user in currentUsersTaskList:
+        # if the row (task[0] = taskId) in tasks.csv does not match the taskId parameter, add to newTaskList
+        if user[2] == oldEmail:
+            newUserList.append([user[0], user[1], newEmail, user[3], user[4]])
+        else:
+            newUserList.append(user)
+    
+    # replace everything in current tasks.csv with newTaskList by passing in 'w' as second parameter
+    insert_user(newUserList,'w')
+
 def delete_user(email):
     # get all the current users in users.csv
     currentUserList = get_user_details()

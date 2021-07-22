@@ -248,6 +248,30 @@ def edit_task(event, *args):
             updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
             messagebox.showinfo(title=None, message="Task updated successfully!")
 
+def edit_user(event, *args):
+
+        tview = event.widget # the TreeView widget on which we 2x clicked a row on
+        row_id = event.widget.focus() # row id that was 2x clicked on
+        values = event.widget.item(row_id)["values"] # the list of values in a row
+
+        print(values) # show 2x clicked row content
+ 
+        # Here you would pop up a dialog with text fields that show the current values
+        # for this row and that can be edited. On OK, you would delete the current row
+        # and re-create (insert) it with the new values from the dialog 
+        # showDialog() // customer multi input  popup - IN PROGRESSS
+
+        # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
+        newEmail = simpledialog.askstring("Edit User", "Please enter the email address:", initialvalue=values[2])
+        if(newEmail.isspace() == True or newEmail == ""):
+            messagebox.showinfo(title=None, message="You must enter a email address!")
+        elif(emailValidator(newEmail) != ""):
+            messagebox.showinfo(title=None, message="Please enter a valid email address!")
+        else:
+            update_user(values[2],newEmail)
+            updateUsersTreeView()
+            messagebox.showinfo(title=None, message="User updated successfully!")
+
         
 class TreeView :
     def __init__(self, master):
@@ -283,6 +307,7 @@ class TreeView :
 
         # CH callback for left mouse button double click on a row of this treeview widget
         tasksTreeview.bind("<Double-1>", edit_task)
+        usersTreeview.bind("<Double-1>", edit_user)
 
         def deleteUserThroughTreeview():
             # Gets selected item index

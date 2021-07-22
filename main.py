@@ -451,7 +451,6 @@ insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTas
 
 # create Treeview widgets
 treeView = TreeView(root)
-insertTask = InsertTask(root)
 insertUser = InsertUser(root)
 
 #this will run the mainloop.

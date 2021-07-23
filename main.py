@@ -11,6 +11,7 @@ from validators.insertUserValidator import *
 from services.emailService import send_email
 from services.dataService import *
 
+# WORK IN PROGRESS - FIGURE OUT HOW TO COMPLETE THIS MULTI INPUT DIALOG BOX
 class SimpleDialog():
     
     def __init__(self):
@@ -85,25 +86,30 @@ def insertUser():
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedInsertUserDropDownTask.get()]], 'a')
         message = "User was added successfully!"
     messagebox.showinfo(title=None, message=message)
+    # Clear all input fields for Add User
     clearInsertUserEntries()
+    # Update Users Treeview with the most recently added data
     updateUsersTreeView()
 
 def insertTask():
+    # Prompt a popup to ask for user's input for the task name
     taskNameInput = simpledialog.askstring(title="Add New Task", prompt="Enter the task name: ", initialvalue="")
+    # Validate task name, and returns empty string if no errors
     taskNameValidatorMessage = taskNameValidator(taskNameInput)
-    # Validation check on fields to ensure it is not empty
+    # If taskNameValidatorMessage is not empty string, throw a alert box for customer
     if taskNameValidatorMessage !="":
         message = taskNameValidatorMessage
     else:
         # Get the most recent task id number and add 1 to create next task id
         nextTaskId = int(get_last_task_id()) + 1
         newTaskList = [nextTaskId, taskNameInput]
-        # execute insert_task function. Retrieving the entry data by invoking get() on the variables
+        # execute insert_task function, appending the newTaskList
         insert_task([newTaskList], append)
         message = "Task added successfully!"
     messagebox.showinfo(title=None, message=message)
-    updateUsersTreeView()
+    # Update the Add User task dropdown
     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+    # Update the Tasks treeview with added task
     updateTasksTreeView()
 
 def deleteTask():
@@ -130,18 +136,10 @@ def deleteUser(emailFromSelectedItemInTreeView):
         delete_user(emailFromSelectedItemInTreeView)
         message = "User was deleted successfully!"
     messagebox.showinfo(title=None, message=message)
+    # Update Users treeview with updated data from csv
     updateUsersTreeView()
 
-# Returns a list of user details
-def getUserDetails():
-    userDetailsList = get_user_details()
-    return userDetailsList
-
-# Returns a list of task names
-def getAllTaskNames():
-    taskDetailNamesList = get_task_detail_names()
-    return taskDetailNamesList
-
+# Function to clear all Insert User Entries
 def clearInsertUserEntries():
     firstName.set("")
     lastName.set("")
@@ -185,23 +183,25 @@ def updateTasksTreeView():
     # Repopulate treeview with newest task details
     insertTaskDetailsIntoTreeView()
 
+# Function to update User Treeview with newest data from csv
 def insertUserDetailsIntoTreeView():
     index = 0
 
-    # Creates a row for each item in getUserDetails result list
-    for user in getUserDetails():
+    # Creates a row for each item in get_user_details result list
+    for user in get_user_details():
         usersTreeview.insert(parent='', index=index, iid=index, text='', values=(user[0], user[1], user[2], user[3], user[4]))
         index +=1
 
+# Function to update Task Treeview with newest data from csv
 def insertTaskDetailsIntoTreeView():
     index = 0
 
-    # Creates a row for each item in getUserDetails result list
+    # Creates a row for each item in get_user_details result list
     for task in get_task_details():
         tasksTreeview.insert(parent='', index=index, iid=index, text='', values=(task[0], task[1]))
         index +=1
         
-
+# Function to trigger the custom multiple input dialog popup - IN PROGRESS
 def showDialog():
     popup = SimpleDialog()
     
@@ -212,22 +212,23 @@ def edit_task(event, *args):
         tview = event.widget # the TreeView widget on which we 2x clicked a row on
         row_id = event.widget.focus() # row id that was 2x clicked on
         values = event.widget.item(row_id)["values"] # the list of values in a row
-
-        print(values) # show 2x clicked row content
  
-        # Here you would pop up a dialog with text fields that show the current values
-        # for this row and that can be edited. On OK, you would delete the current row
-        # and re-create (insert) it with the new values from the dialog 
+        # popup dialog to task for the new task name to replace the selected one
+        newTaskName = simpledialog.askstring("Edit Task Name", "Please enter the new task name:", initialvalue=values[1])
+
         # showDialog() // customer multi input  popup - IN PROGRESSS
 
-        # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
-        newTaskName = simpledialog.askstring("Edit Task Name", "Please enter the new task name:", initialvalue=values[1])
+        # show message alert box if and prevent update if field does not pass validation
         if(newTaskName.isspace() == True or newTaskName == ""):
             messagebox.showinfo(title=None, message="You must enter a task name!")
         else:
+            # call update_task with current task Id and user inputted task name
             update_task(values[0], newTaskName)
+            # update Tasks treeview with newest data from csv
             updateTasksTreeView()
+            # update Add User's task dropdown with newest data
             updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+            # inform user of successful update
             messagebox.showinfo(title=None, message="Task updated successfully!")
 
 def edit_user(event, *args):
@@ -235,22 +236,21 @@ def edit_user(event, *args):
         tview = event.widget # the TreeView widget on which we 2x clicked a row on
         row_id = event.widget.focus() # row id that was 2x clicked on
         values = event.widget.item(row_id)["values"] # the list of values in a row
-
-        print(values) # show 2x clicked row content
  
-        # Here you would pop up a dialog with text fields that show the current values
-        # for this row and that can be edited. On OK, you would delete the current row
-        # and re-create (insert) it with the new values from the dialog 
+        # popup dialog to task for the new task name to replace the selected one
+        newEmail = simpledialog.askstring("Edit User", "Please enter the email address:", initialvalue=values[2])
+      
         # showDialog() // customer multi input  popup - IN PROGRESSS
 
-        # new_text = show_edit_dialog(values[1]) # assume we only want to edit the task name 
-        newEmail = simpledialog.askstring("Edit User", "Please enter the email address:", initialvalue=values[2])
+        # display message box if validation does not pass and prevents update
         if(newEmail.isspace() == True or newEmail == ""):
             messagebox.showinfo(title=None, message="You must enter a email address!")
         elif(emailValidator(newEmail) != ""):
             messagebox.showinfo(title=None, message="Please enter a valid email address!")
         else:
+            # if validation passes, call update_user with user's input
             update_user(values[2],newEmail)
+            # update Users treeview with newest data from csv
             updateUsersTreeView()
             messagebox.showinfo(title=None, message="User updated successfully!")
 

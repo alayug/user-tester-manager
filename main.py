@@ -412,8 +412,8 @@ bottomFrame.pack(side=BOTTOM, fill=BOTH)
 bottomFrame.place(anchor="c", relx=.45, rely=.8)
 
 # Create treeview (table) for users
-usersTreeview = tkinter.ttk.Treeview(topFrame)
-tasksTreeview = tkinter.ttk.Treeview(topFrame)
+usersTreeview = tkinter.ttk.Treeview(topFrame, selectmode="browse")
+tasksTreeview = tkinter.ttk.Treeview(topFrame, selectmode="browse")
 
 # Create all variables required for insertUsers
 firstName = StringVar()

@@ -69,6 +69,7 @@ def insertUser():
     lastNameValidatorMessage = lastNameValidator(lastName.get())
     emailAddressValidatorMessage = emailValidator(emailAddress.get())
     phoneNumberValidatorMessage = phoneNumberValidator(phoneNumber.get())
+    message = ""
 
     # If any fields return a message indicating a regex violation, display the message in a messagebox
     if firstNameValidatorMessage != "":
@@ -82,14 +83,16 @@ def insertUser():
     elif selectedInsertUserDropDownTask.get() =="Select One":
         message = "You must select a task from the task list!"
     else:
-    # execute insert_user function. Retrieving the entry data by invoking get() on the variables
+        # reset message to empty string so it wont trigger popup dialog
+        message = ""
+        # execute insert_user function. Retrieving the entry data by invoking get() on the variables
         insert_user([[firstName.get(), lastName.get(), emailAddress.get(), phoneNumber.get(), selectedInsertUserDropDownTask.get()]], 'a')
-        message = "User was added successfully!"
-    messagebox.showinfo(title=None, message=message)
-    # Clear all input fields for Add User
-    clearInsertUserEntries()
-    # Update Users Treeview with the most recently added data
-    updateUsersTreeView()
+        # Clear all input fields for Add User
+        clearInsertUserEntries()
+        # Update Users Treeview with the most recently added data
+        updateUsersTreeView()
+    if message != "":
+        messagebox.showinfo(title=None, message=message)
 
 def insertTask():
     # Prompt a popup to ask for user's input for the task name
@@ -98,24 +101,22 @@ def insertTask():
     taskNameValidatorMessage = taskNameValidator(taskNameInput)
     # If taskNameValidatorMessage is not empty string, throw a alert box for customer
     if taskNameValidatorMessage !="":
-        message = taskNameValidatorMessage
+        messagebox.showinfo(title=None, message=taskNameValidatorMessage)
     else:
         # Get the most recent task id number and add 1 to create next task id
         nextTaskId = int(get_last_task_id()) + 1
         newTaskList = [nextTaskId, taskNameInput]
         # execute insert_task function, appending the newTaskList
         insert_task([newTaskList], append)
-        message = "Task added successfully!"
-    messagebox.showinfo(title=None, message=message)
-    # Update the Add User task dropdown
-    updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
-    # Update the Tasks treeview with added task
-    updateTasksTreeView()
+        # Update the Add User task dropdown
+        updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+        # Update the Tasks treeview with added task
+        updateTasksTreeView()
 
 def deleteTask():
     # If no task has been selected from dropdown, throw a message
     if selectedDropDownDeleteTask.get() == "Select a task":
-        message = "You must select a task to delete!"
+        messagebox.showinfo(title=None, message="You must select a task to delete!")
     else:
         # Gets current string of selected drop down delete task
         selectedDeleteTaskString = selectedDropDownDeleteTask.get()
@@ -123,19 +124,15 @@ def deleteTask():
         stringTaskId = selectedDeleteTaskString.split("'")
         # Execute delete_task with int by converting string value of task id to int
         delete_task(int(stringTaskId[1]))
-        message = "Task was deleted successfully!"
-    messagebox.showinfo(title=None, message=message)
-    updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
-    updateTasksTreeView()
+        updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
+        updateTasksTreeView()
 
 def deleteUser(emailFromSelectedItemInTreeView):
-    if emailFromSelectedItemInTreeView == "":
-        message = "Please select a user to delete!"
+    if emailFromSelectedItemInTreeView == "": 
+        messagebox.showinfo(title=None, message="Please select a user to delete!")
     else:
         # execute insert_user function. Retrieving the entry data by invoking get() on the variables
-        delete_user(emailFromSelectedItemInTreeView)
-        message = "User was deleted successfully!"
-    messagebox.showinfo(title=None, message=message)
+        delete_user(emailFromSelectedItemInTreeView)    
     # Update Users treeview with updated data from csv
     updateUsersTreeView()
 
@@ -228,8 +225,6 @@ def edit_task(event, *args):
             updateTasksTreeView()
             # update Add User's task dropdown with newest data
             updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
-            # inform user of successful update
-            messagebox.showinfo(title=None, message="Task updated successfully!")
 
 def edit_user(event, *args):
 
@@ -252,7 +247,6 @@ def edit_user(event, *args):
             update_user(values[2],newEmail)
             # update Users treeview with newest data from csv
             updateUsersTreeView()
-            messagebox.showinfo(title=None, message="User updated successfully!")
 
         
 class TreeView :
@@ -320,7 +314,6 @@ class TreeView :
                     delete_task(taskIdFromSelectedItemInTreeView)
                     updateTasksTreeView()
                     updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
-                    messagebox.showinfo(title=None, message="Task deleted successfully!")
                     
      
         def email():

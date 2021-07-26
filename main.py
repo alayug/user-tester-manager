@@ -166,7 +166,8 @@ class InsertUser:
        
         insertUserTaskOptionMenu.grid(row = 5,column = 1)
         # button to trigger function to insert user data
-        Button(bottomFrame ,text=ADD_USER, command=insertUser).grid(row=6,column=1)
+        Button(bottomFrame ,text=ADD_USER, command=insertUser, bg='SteelBlue4',fg='Snow').grid(row=6,column=1)
+    
 
 def updateUsersTreeView():
     # Deletes all contents of treeview
@@ -255,29 +256,29 @@ class TreeView :
         
         usersTreeview['columns']=(FIRST_NAME, LAST_NAME, EMAIL_ADDRESS, PHONE_NUMBER, TASK_NAME)
         usersTreeview.column('#0', width=0, stretch=NO)
-        usersTreeview.column(FIRST_NAME, anchor=CENTER, width=80)
-        usersTreeview.column(LAST_NAME, anchor=CENTER, width=80)
-        usersTreeview.column(EMAIL_ADDRESS, anchor=CENTER, width=120)
-        usersTreeview.column(PHONE_NUMBER, anchor=CENTER, width=100)
-        usersTreeview.column(TASK_NAME, anchor=CENTER, width=80)
+        usersTreeview.column(FIRST_NAME, anchor='w', width=80)
+        usersTreeview.column(LAST_NAME, anchor='w', width=80)
+        usersTreeview.column(EMAIL_ADDRESS, anchor='w', width=120)
+        usersTreeview.column(PHONE_NUMBER, anchor='w', width=100)
+        usersTreeview.column(TASK_NAME, anchor='w', width=80)
 
-        usersTreeview.heading('#0', text='', anchor=CENTER)
-        usersTreeview.heading(FIRST_NAME, text=FIRST_NAME, anchor=CENTER)
-        usersTreeview.heading(LAST_NAME, text=LAST_NAME, anchor=CENTER)
-        usersTreeview.heading(EMAIL_ADDRESS, text=EMAIL_ADDRESS, anchor=CENTER)
-        usersTreeview.heading(PHONE_NUMBER, text=PHONE_NUMBER, anchor=CENTER)
-        usersTreeview.heading(TASK_NAME, text=TASK_NAME, anchor=CENTER)
+        usersTreeview.heading('#0', text='', anchor='w')
+        usersTreeview.heading(FIRST_NAME, text=FIRST_NAME, anchor='w')
+        usersTreeview.heading(LAST_NAME, text=LAST_NAME, anchor='w')
+        usersTreeview.heading(EMAIL_ADDRESS, text=EMAIL_ADDRESS, anchor='w')
+        usersTreeview.heading(PHONE_NUMBER, text=PHONE_NUMBER, anchor='w')
+        usersTreeview.heading(TASK_NAME, text=TASK_NAME, anchor='w')
 
         insertUserDetailsIntoTreeView()
 
         tasksTreeview['columns']=(TASK_ID, TASK_NAME)
         tasksTreeview.column('#0', width=0, stretch=NO)
-        tasksTreeview.column(TASK_ID, anchor=CENTER, width=80)
-        tasksTreeview.column(TASK_NAME, anchor=CENTER, width=200)
+        tasksTreeview.column(TASK_ID, anchor='w', width=80)
+        tasksTreeview.column(TASK_NAME, anchor='w', width=200)
 
-        tasksTreeview.heading('#0', text='', anchor=CENTER)
-        tasksTreeview.heading(TASK_ID, text=TASK_ID, anchor=CENTER)
-        tasksTreeview.heading(TASK_NAME, text=TASK_NAME, anchor=CENTER)
+        tasksTreeview.heading('#0', text='', anchor='w')
+        tasksTreeview.heading(TASK_ID, text=TASK_ID, anchor='w')
+        tasksTreeview.heading(TASK_NAME, text=TASK_NAME, anchor='w')
 
         insertTaskDetailsIntoTreeView()
 
@@ -375,18 +376,24 @@ class TreeView :
             displayTasksTreeview()
 
         deleteUserButton = Button(topFrame ,text="Delete User", command=deleteUserThroughTreeview)
+        deleteUserButton.configure(bg='light coral')
         # Create all labels and entries button required for Users Treeview
         emailPasswordLabel = Label(topFrame, text = "Password for Email")
         emailPasswordEntry = Entry(topFrame, textvariable = password)
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
+        sendEmailButton.configure(bg='SteelBlue4',fg='Snow')
 
         # Create button to add task
         addTaskButton = Button(topFrame ,text="Add Task", command=insertTask)
+        addTaskButton.configure(bg='SteelBlue4',fg='Snow')
         # Create button to delete task
         deleteTaskButton = Button(topFrame ,text="Delete Task", command=deleteTaskThroughTreeview)
+        deleteTaskButton.configure(bg='light coral')
 
         displayUsersTreeviewButton = Button(topFrame ,text="Display Users", command=displayUsersButtonAction)
+        displayUsersTreeviewButton.configure(bg='SteelBlue4',fg='Snow')
         displayTasksTreeviewButton = Button(topFrame ,text="Display Tasks", command=displayTasksButtonAction)
+        displayTasksTreeviewButton.configure(bg='SteelBlue4',fg='Snow')
 
         displayUsersTreeviewButton.pack()
         displayTasksTreeviewButton.pack()

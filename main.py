@@ -148,18 +148,18 @@ class InsertUser:
     def __init__(self,master) :
         ###### USER UI #######
         # Create all labels required for users.csv, using grid for organization
-        insertUserTitle = Label(bottomFrame, text = ADD_USER, anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
-        firstNameLabel = Label(bottomFrame, text = FIRST_NAME).grid(row = 1,column = 0)
-        lastNameLabel = Label(bottomFrame, text = LAST_NAME).grid(row = 2,column = 0)
-        emailAddressLabel = Label(bottomFrame, text = EMAIL_ADDRESS).grid(row = 3,column = 0)
-        phoneNumberLabel = Label(bottomFrame, text = PHONE_NUMBER).grid(row = 4,column = 0)
-        taskIDLabel = Label(bottomFrame, text = "Task").grid(row = 5,column = 0)
+        Label(bottomFrame, text = ADD_USER, anchor=CENTER, font=tkFont.Font(size=16)).grid(row = 0,column = 1)
+        Label(bottomFrame, text = FIRST_NAME).grid(row = 1,column = 0)
+        Label(bottomFrame, text = LAST_NAME).grid(row = 2,column = 0)
+        Label(bottomFrame, text = EMAIL_ADDRESS).grid(row = 3,column = 0)
+        Label(bottomFrame, text = PHONE_NUMBER).grid(row = 4,column = 0)
+        Label(bottomFrame, text = "Task").grid(row = 5,column = 0)
 
         # Create all entries required for users.csv
-        firstNameEntry = Entry(bottomFrame, textvariable = firstName).grid(row = 1,column = 1)
-        lastNameEntry = Entry(bottomFrame, textvariable = lastName).grid(row = 2,column = 1)
-        emailAddressEntry = Entry(bottomFrame, textvariable = emailAddress).grid(row = 3,column = 1)
-        phoneNumberEntry = Entry(bottomFrame, textvariable = phoneNumber).grid(row = 4,column = 1)
+        Entry(bottomFrame, textvariable = firstName).grid(row = 1,column = 1)
+        Entry(bottomFrame, textvariable = lastName).grid(row = 2,column = 1)
+        Entry(bottomFrame, textvariable = emailAddress).grid(row = 3,column = 1)
+        Entry(bottomFrame, textvariable = phoneNumber).grid(row = 4,column = 1)
 
         # Set default value
         selectedInsertUserDropDownTask.set("Select One")
@@ -207,7 +207,6 @@ def showDialog():
 # CH example of how to manipulate a row that got a 2x click
 def edit_task(event, *args):
 
-        tview = event.widget # the TreeView widget on which we 2x clicked a row on
         row_id = event.widget.focus() # row id that was 2x clicked on
         values = event.widget.item(row_id)["values"] # the list of values in a row
  
@@ -228,8 +227,6 @@ def edit_task(event, *args):
             updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu)
 
 def edit_user(event, *args):
-
-        tview = event.widget # the TreeView widget on which we 2x clicked a row on
         row_id = event.widget.focus() # row id that was 2x clicked on
         values = event.widget.item(row_id)["values"] # the list of values in a row
  

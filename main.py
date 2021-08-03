@@ -11,7 +11,7 @@ from validators.insertUserValidator import *
 from services.emailService import send_email
 from services.dataService import *
 
-# WORK IN PROGRESS - FIGURE OUT HOW TO COMPLETE THIS MULTI INPUT DIALOG BOX
+# WORK IN PROGRESS - FIGURE OUT HOW TO COMPLETE THIS CUSTOM MULTI INPUT DIALOG BOX
 class SimpleDialog():
     
     def __init__(self):
@@ -21,6 +21,7 @@ class SimpleDialog():
         self.output2 = ""
         self.initUI()
         
+    # Create the entry and label UI
     def initUI(self):
         window = Toplevel()
         lbl1 = Label(window, text="Input 1", width=6)
@@ -37,15 +38,16 @@ class SimpleDialog():
 
 
         # Command tells the form what to do when the button is clicked
-        btn = Button(window, text="Submit", command=self.onSubmit)
+        btn = Button(window, text=SUBMIT, command=self.onSubmit)
         btn.pack(padx=5, pady=10)
 
-    def onSubmit(self):
 
+    def onSubmit(self):
         self.output1 = self.entry1.get()
         self.output2 = self.entry2.get()
         user_input = (self.output1, self.output2)
         print("user input", user_input)
+        # Close the multi input dialog only BUT some reason, it closes the whole application
         self.window.destroy()
 
 #
@@ -61,7 +63,7 @@ def updateInsertUserTaskOptionMenu(insertUserTaskOptionMenu):
     insertUserTaskOptionMenu = OptionMenu(bottomFrame, selectedInsertUserDropDownTask, *taskDetailsList)
     # Set newest insert user task drop down at the previous drop down's location
     insertUserTaskOptionMenu.grid(row = 5,column = 1)
-    selectedInsertUserDropDownTask.set("Select One")
+    selectedInsertUserDropDownTask.set(SELECT_ONE)
 
 def insertUser():
     # Validates every field in insertUser to ensure it meets criteria
@@ -80,7 +82,7 @@ def insertUser():
         message = emailAddressValidatorMessage
     elif phoneNumberValidatorMessage != "":
         message = phoneNumberValidatorMessage
-    elif selectedInsertUserDropDownTask.get() =="Select One":
+    elif selectedInsertUserDropDownTask.get() ==SELECT_ONE:
         message = "You must select a task from the task list!"
     else:
         # reset message to empty string so it wont trigger popup dialog
@@ -96,7 +98,7 @@ def insertUser():
 
 def insertTask():
     # Prompt a popup to ask for user's input for the task name
-    taskNameInput = simpledialog.askstring(title="Add New Task", prompt="Enter the task name: ", initialvalue="")
+    taskNameInput = simpledialog.askstring(title=ADD_NEW_TASK, prompt="Enter the task name: ", initialvalue="")
     # Validate task name, and returns empty string if no errors
     taskNameValidatorMessage = taskNameValidator(taskNameInput)
     # If taskNameValidatorMessage is not empty string, throw a alert box for customer
@@ -115,8 +117,8 @@ def insertTask():
 
 def deleteTask():
     # If no task has been selected from dropdown, throw a message
-    if selectedDropDownDeleteTask.get() == "Select a task":
-        messagebox.showinfo(title=None, message="You must select a task to delete!")
+    if selectedDropDownDeleteTask.get() == SELECT_A_TASK:
+        messagebox.showinfo(title=None, message=TASK_NOT_SELECTED_MESSAGE)
     else:
         # Gets current string of selected drop down delete task
         selectedDeleteTaskString = selectedDropDownDeleteTask.get()
@@ -129,7 +131,7 @@ def deleteTask():
 
 def deleteUser(emailFromSelectedItemInTreeView):
     if emailFromSelectedItemInTreeView == "": 
-        messagebox.showinfo(title=None, message="Please select a user to delete!")
+        messagebox.showinfo(title=None, message=USER_NOT_SELECTED_MESSAGE)
     else:
         # execute insert_user function. Retrieving the entry data by invoking get() on the variables
         delete_user(emailFromSelectedItemInTreeView)    
@@ -142,7 +144,7 @@ def clearInsertUserEntries():
     lastName.set("")
     emailAddress.set("")
     phoneNumber.set("")
-    selectedInsertUserDropDownTask.set("Select One")
+    selectedInsertUserDropDownTask.set(SELECT_ONE)
 
 class InsertUser: 
     def __init__(self,master) :
@@ -162,7 +164,7 @@ class InsertUser:
         Entry(bottomFrame, textvariable = phoneNumber).grid(row = 4,column = 1)
 
         # Set default value
-        selectedInsertUserDropDownTask.set("Select One")
+        selectedInsertUserDropDownTask.set(SELECT_ONE)
        
         insertUserTaskOptionMenu.grid(row = 5,column = 1)
         # button to trigger function to insert user data
@@ -287,7 +289,7 @@ class TreeView :
             # Gets selected item index
             selectedItem = usersTreeview.selection()
             if usersTreeview.item(selectedItem)['values']=="" :
-                messagebox.showinfo(title=None, message="Please select a user to delete.")
+                messagebox.showinfo(title=None, message=USER_NOT_SELECTED_MESSAGE)
             else:
                 answer = messagebox.askyesno(title='Delete User Confirmation',
                     message='Are you sure that you want to delete the user?')
@@ -301,7 +303,7 @@ class TreeView :
             # Gets selected item index
             selectedItem = tasksTreeview.selection()
             if tasksTreeview.item(selectedItem)['values']=="" :
-                messagebox.showinfo(title=None, message="Please select a task to delete.")
+                messagebox.showinfo(title=None, message=TASK_NOT_SELECTED_MESSAGE)
             else:
                 answer = messagebox.askyesno(title='Delete Task Confirmation',
                     message='Are you sure that you want to delete the task?')
@@ -328,8 +330,8 @@ class TreeView :
                 firstNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][0]
                 emailFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][2]
                 taskNameFromSelectedItemInTreeView = usersTreeview.item(selectedItem)['values'][4]
-                dateToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the date you want the user to complete the task by:", initialvalue="")
-                timeToCompleteBy = simpledialog.askstring(title = "Complete task by...", prompt = "Please enter the time you want the user to complete the task by:", initialvalue="")
+                dateToCompleteBy = simpledialog.askstring(title = COMPLETE_TASK_BY, prompt = "Please enter the date you want the user to complete the task by:", initialvalue="")
+                timeToCompleteBy = simpledialog.askstring(title = COMPLETE_TASK_BY, prompt = "Please enter the time you want the user to complete the task by:", initialvalue="")
                 if(dateToCompleteBy == ""):
                     message = "Please enter a date the user must complete their task by."
                 elif(timeToCompleteBy == ""):
@@ -384,7 +386,7 @@ class TreeView :
         addTaskButton = Button(topFrame ,text="Add Task", command=insertTask)
         addTaskButton.configure(bg='SteelBlue4',fg='Snow')
         # Create button to delete task
-        deleteTaskButton = Button(topFrame ,text="Delete Task", command=deleteTaskThroughTreeview)
+        deleteTaskButton = Button(topFrame ,text=DELETE_TASK, command=deleteTaskThroughTreeview)
         deleteTaskButton.configure(bg='light coral')
 
         displayUsersTreeviewButton = Button(topFrame ,text="Display Users", command=displayUsersButtonAction)

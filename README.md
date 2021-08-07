@@ -22,6 +22,27 @@ Copy and paste the following command into your Powershell:
 ## If working properly, you should see the screen below:  
 ![image](https://user-images.githubusercontent.com/84653735/127938798-e137fb22-fe97-4e1d-b5ac-9e0c26faf2aa.png)
 
+## Switching Views (User & Task View)
+In the application, you can toogle between user view and list view using the two blue buttons above called "Display User" & "Display Task"
+
+## Adding a User
+To add a user, fill out the add user fields (first name, last name, email, phone) and select a task from the dropdown.
+
+## Deleting a User
+To delete a user, select a user from the list and click the "delete user" button. A confirmation pop-up will appear to confirm your action.
+
+## Editing a User information (email only)
+Currently, the edit only is available to the user's email address. To edit the user's email address, select the user and double click the email address. A pop-up will appear that lets you edit the email in the field.
+
+## Sending Email Reminders
+To send an email reminder to a user, select a user, type in the password, and click the "Email User" button. A pop-up asking for more information will appear (Time, Date, and Additional Info). Fill out the information and a confirmation pop-up will appear once the email has been sent.
+
+## Adding a Task
+To add a task, go to the Task View (make sure you select "Display Task" button if you don't see the task list). Click "Add Task" button and a pop-up will appear asking for the task name. Fill out the field and hit "OK". The task should now also be available in the dropdown if you're adding a user.
+
+## Deleting a Task
+To delete a task, select a task from the list and click the "Delete Task" button. A confirmation pop-up will appear to confirm your action.
+
 You are all ready to use the application!
 
 # Technical Diagram

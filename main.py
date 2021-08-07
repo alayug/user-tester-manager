@@ -73,7 +73,7 @@ def insertUser():
     phoneNumberValidatorMessage = phoneNumberValidator(phoneNumber.get())
     message = ""
 
-    # If any fields return a message indicating a regex violation, display the message in a messagebox
+    # If any fields return a message indicating a regex violation, display the message in a messagebox and do not insert to csv
     if firstNameValidatorMessage != "":
         message = firstNameValidatorMessage
     elif lastNameValidatorMessage != "":
@@ -138,7 +138,7 @@ def deleteUser(emailFromSelectedItemInTreeView):
     # Update Users treeview with updated data from csv
     updateUsersTreeView()
 
-# Function to clear all Insert User Entries
+# Function to clear all Insert User Entries by setting them to empty string
 def clearInsertUserEntries():
     firstName.set("")
     lastName.set("")
@@ -253,6 +253,7 @@ class TreeView :
     def __init__(self, master):
         ####### SELECTION FIELD #########
         
+        # Create the columns for the user treeview
         usersTreeview['columns']=(FIRST_NAME, LAST_NAME, EMAIL_ADDRESS, PHONE_NUMBER, TASK_NAME)
         usersTreeview.column('#0', width=0, stretch=NO)
         usersTreeview.column(FIRST_NAME, anchor='w', width=80)
@@ -261,6 +262,8 @@ class TreeView :
         usersTreeview.column(PHONE_NUMBER, anchor='w', width=100)
         usersTreeview.column(TASK_NAME, anchor='w', width=80)
 
+
+        # Create the heading names and size of the user treeview
         usersTreeview.heading('#0', text='', anchor='w')
         usersTreeview.heading(FIRST_NAME, text=FIRST_NAME, anchor='w')
         usersTreeview.heading(LAST_NAME, text=LAST_NAME, anchor='w')
@@ -270,11 +273,13 @@ class TreeView :
 
         insertUserDetailsIntoTreeView()
 
+        # Create the columns for tasks treeview
         tasksTreeview['columns']=(TASK_ID, TASK_NAME)
         tasksTreeview.column('#0', width=0, stretch=NO)
         tasksTreeview.column(TASK_ID, anchor='w', width=80)
         tasksTreeview.column(TASK_NAME, anchor='w', width=200)
 
+        # Create the column names and size for tasks treeview
         tasksTreeview.heading('#0', text='', anchor='w')
         tasksTreeview.heading(TASK_ID, text=TASK_ID, anchor='w')
         tasksTreeview.heading(TASK_NAME, text=TASK_NAME, anchor='w')
@@ -342,6 +347,7 @@ class TreeView :
                     message = "Email Sent!"
             messagebox.showinfo(title="Email Service", message=message)
         
+        # function, when invoked, will display the users treeview table
         def displayUsersTreeview(): 
             usersTreeview.pack()
             deleteUserButton.pack()
@@ -349,6 +355,7 @@ class TreeView :
             emailPasswordEntry.pack()
             sendEmailButton.pack()
         
+        # function when invoked, will hide the users treeview table
         def hideUsersTreeview():
             usersTreeview.pack_forget()
             deleteUserButton.pack_forget()            
@@ -356,29 +363,35 @@ class TreeView :
             emailPasswordEntry.pack_forget()
             sendEmailButton.pack_forget()
 
+        # function when invoked, will display the tasks treeview table
         def displayTasksTreeview():
             tasksTreeview.pack()
             addTaskButton.pack()
             deleteTaskButton.pack()
         
+        # function when invoked, will hide the tasks treeview table
         def hideTasksTreeview():
             tasksTreeview.pack_forget()
             addTaskButton.pack_forget()
             deleteTaskButton.pack_forget()
 
+        # function to displays users treeview table buttons
         def displayUsersButtonAction():
             hideTasksTreeview()
             displayUsersTreeview()
 
+        # function to displays tasks treeview table buttons
         def displayTasksButtonAction():
             hideUsersTreeview()
             displayTasksTreeview()
 
+        # Create delete user button and set color
         deleteUserButton = Button(topFrame ,text="Delete User", command=deleteUserThroughTreeview)
         deleteUserButton.configure(bg='light coral')
         # Create all labels and entries button required for Users Treeview
         emailPasswordLabel = Label(topFrame, text = "Password for Email")
         emailPasswordEntry = Entry(topFrame, textvariable = password)
+        # Create send email button and set the color to SteelBlue4
         sendEmailButton = Button(topFrame ,text="Email User", command=email)
         sendEmailButton.configure(bg='SteelBlue4',fg='Snow')
 
@@ -401,8 +414,6 @@ class TreeView :
 #
 # MAIN
 #
-
-
 root = Tk()
 
 # Create the size of the widget

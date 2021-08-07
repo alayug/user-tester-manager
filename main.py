@@ -11,7 +11,7 @@ from validators.insertUserValidator import *
 from services.emailService import send_email
 from services.dataService import *
 
-# WORK IN PROGRESS - FIGURE OUT HOW TO COMPLETE THIS CUSTOM MULTI INPUT DIALOG BOX
+#TODO WORK IN PROGRESS - FIGURE OUT HOW TO COMPLETE THIS CUSTOM MULTI INPUT DIALOG BOX
 class SimpleDialog():
     
     def __init__(self):
@@ -201,7 +201,7 @@ def insertTaskDetailsIntoTreeView():
         tasksTreeview.insert(parent='', index=index, iid=index, text='', values=(task[0], task[1]))
         index +=1
         
-# Function to trigger the custom multiple input dialog popup - IN PROGRESS
+#TODO Function to trigger the custom multiple input dialog popup - IN PROGRESS
 def showDialog():
     popup = SimpleDialog()
     
@@ -215,7 +215,7 @@ def edit_task(event, *args):
         # popup dialog to task for the new task name to replace the selected one
         newTaskName = simpledialog.askstring("Edit Task Name", "Please enter the new task name:", initialvalue=values[1])
 
-        # showDialog() // customer multi input  popup - IN PROGRESSS
+        #TODO showDialog() // custom multi input  popup - IN PROGRESSS
 
         # show message alert box if and prevent update if field does not pass validation
         if(newTaskName.isspace() == True or newTaskName == ""):

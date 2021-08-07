@@ -62,6 +62,26 @@ This component will have all the classes to create the UI such as the Treeview, 
 
 **emailService.py** - this function will send a email to the user using Python's smtplib and Google's Gmail smtp server. A password is required to use the email service so please find the appropriate owner.
 
+# Code Structure and Setup
+![image](https://user-images.githubusercontent.com/84653735/128588114-434f7bfb-2159-4da4-9af5-187918c2085b.png)  
+The image above displays the project structure.
+
+**__pycache__** - Things that are cached by Python during development. We put this in the .gitignore so you will not see this file on Github.  
+**.vscode** - Settings for Visual Studios, please feel free to use them if you are using Visual Studio.  
+**constants** - This is the directory to store common strings that are used throughout the code. By putting them in a file, you can easily refactor and rename anything if they happen to change in the future.  
+**database** - This directory stores all the "data" for the application. The data will be stored in a csv format in the csv files, which are just comma seperated values.  
+**docs** - Directory will consists of simple docs that may be helpful to users or developers.  
+**services** - This folder consists of the middleware that will allow communication between the UI and the backend (csv). It holds the code to modify data and email users.  
+**tests** - Folder that will store all the test for the code.  
+**validators** - Directory that holds all the validators for each input field in the UI to ensure they pass before allowing the data to be modified.  
+**.gitignore** - This file holds all the files that you do not want to be committed to Github. Such good files to add in here would be passwords or things common to only your local machine such as cache.  
+**main.py** - This is the starting point and the place where you will execute Python to start up the application.  
+**README.md** - This is what you are currently reading. This provides users with a good starting point and details about your application.  
+**run_unit_tests.py** - Executing this will run all the tests you have. You will have to import your test files into this file.
+
+# Modules
+Every module used in this application came from Python when it was installed so no additional need to use pip for additional modules! 
+
 # Bugs and issues found during development
 1. **RESOLVED** Do not rename emailService.py to email.py, there is a known bug in which the code will not recognize and execute the email functionality. 
 2. **RESOLVED** User was able to select multiple fields in the Treeview. Set the Treeview with selectmode="browse". 
